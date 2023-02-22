@@ -24,10 +24,11 @@ namespace Plugins.CustomAPIs
         private const string JiraSetTicketsFunctionName = "SetJiraTicketState";
 
         private const string ResponseParameter = "con_response";
-        
+
         #endregion
 
         #region execute Method
+        
         public void Execute(IServiceProvider serviceProvider)
         {
             ITracingService trace = serviceProvider.GetService(typeof(ITracingService)) as ITracingService;
