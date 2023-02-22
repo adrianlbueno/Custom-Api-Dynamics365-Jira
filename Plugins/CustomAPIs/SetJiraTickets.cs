@@ -65,7 +65,6 @@ namespace Plugins.CustomAPIs
             if (isOpportunityOpen == false)
             {
                 return;
-
             }
 
             bool isJiraEnvironment = TryGetJiraEnvironmentDefinitionName(crmServiceContext, out string errorMessage, out EnvironmentVariableDefinition jiraFunctionEnvironmentDefinition);
