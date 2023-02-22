@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects Condition="'$(MSBuildVersion)' == '' Or '$(MSBuildVersion)' &lt; '16.0'">$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>a0cfa48d-1613-4395-9fd7-fb170288c86e</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>IHK.FinalProject.Shared</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Converter\FieldsConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converter\StringToDateTimeOffsetConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Jira\Assignee.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Jira\Creator.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Jira\Customfield.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Jira\Fields.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Jira\FixVersion.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Jira\Issue.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Jira\IssueLink.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Jira\IssueLinkType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Jira\IssueResult.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Jira\IssueType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Jira\OutwardIssue.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Jira\OutwardIssueFields.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Jira\Person.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Jira\Priority.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Jira\ProgressContainer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Jira\Project.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Jira\Reporter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Jira\Result.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Jira\Status.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Jira\StatusCategory.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Jira\Transition.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Jira\TransitionContainer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Jira\Vote.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Jira\Watches.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Requests\SetJiraTicketStateRequestBody.cs" />
+  </ItemGroup>
+</Project>

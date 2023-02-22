@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CrmConnections xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <DefaultConnectionIndex>0</DefaultConnectionIndex>
+  <Connections>
+  <ConnectionDetail>
+      <WriteBufferPackageSize>0</WriteBufferPackageSize>
+      <ConnectionName>Demo</ConnectionName>
+      <UniqueOrgName>unq7d911456143d49ba994afec79c6ac</UniqueOrgName>
+      <ServerName>https://orgbb923eae.crm.dynamics.com/</ServerName> <!-- changed after AppUser -->
+      <ServerPort>443</ServerPort> <!-- changed after AppUser -->
+      <UseSsl>true</UseSsl> <!-- changed after AppUser -->
+      <IsCustomAuth>true</IsCustomAuth>
+      <UserDomain />
+      <UserName>490e6114-a80b-48ad-bdde-8dc24d1c4864</UserName> <!-- App ID -->
+      <UserPassword>tL8Yv3uiU9GJvR+Sie/jAy6/Fpbftc0fFaJNvuj8lI1D4HNKkfw1BOqhiYhtSQyu</UserPassword> <!-- Encrypted Client Secret -->
+      <SavePassword>true</SavePassword>
+      <CrmDeploymentType>O365</CrmDeploymentType>
+      <SqlServerIpOrName />
+      <SolutionName />
+      <ExportOnCommit>false</ExportOnCommit> 
+      <Timeout>1200000000</Timeout>
+      <Authority />
+      <AuthHomeRealm>ClientSecret</AuthHomeRealm> <!-- changed after AppUser -->
+      <CrmOnlineRegion>EMEA</CrmOnlineRegion>
+      <AdvancedCheck>True</AdvancedCheck>
+    </ConnectionDetail>
+  </Connections>
+</CrmConnections>

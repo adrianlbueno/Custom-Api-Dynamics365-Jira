@@ -1,0 +1,2 @@
+C:\projekte\ABU Final Project\Scripts\obj\Release\Scripts.csproj.AssemblyReference.cache
+C:\projekte\ABU Final Project\Scripts\obj\Release\Scripts.csproj.CoreCompileInputs.cache

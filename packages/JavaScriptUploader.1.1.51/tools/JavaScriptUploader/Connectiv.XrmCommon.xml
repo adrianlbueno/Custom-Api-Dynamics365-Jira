@@ -1,0 +1,2131 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Connectiv.XrmCommon</name>
+    </assembly>
+    <members>
+        <member name="M:Connectiv.XrmCommon.Log4NetHelper.Configure">
+            <summary>
+            http://logging.apache.org/log4net/release/manual/configuration.html
+            </summary>
+        </member>
+        <member name="T:Connectiv.XrmCommon.XrmBaseConstants">
+            <summary>
+            Hilfsklasse für Globale Konstaten.
+            </summary>
+        </member>
+        <member name="T:Connectiv.XrmCommon.ConnectionDetail">
+            <summary>
+            One instance contains all information required to establish a connection to any CRM installation.
+            Should be populated using a connection file or the <see cref="!:Connectiv.XrmCommon.ConnectionGui.LoginWindow.LoginDialog.Show(CrmConnectionManager)"/>.
+            Will be serialized as part of the <see cref="T:Connectiv.XrmCommon.ConnectionRepositorySettings"/>.
+            </summary>
+        </member>
+        <member name="F:Connectiv.XrmCommon.ConnectionDetail.connectionfinished">
+            <summary>
+            Indicates whether the connection is successfully established.
+            null - not yet finished connecting
+            true - successfully connected
+            false - connection failed
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmCommon.ConnectionDetail.ConnectionName">
+            <summary>
+            Gets or sets the displayname for this connection.
+            May be set to anything.
+            <para/>
+            Should always be set.
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmCommon.ConnectionDetail.UniqueOrgName">
+            <summary>
+            Gets or sets the unique organization name.
+            For online organizations this may be a slightly cryptic name.
+            <para/>
+            Should always be set.
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmCommon.ConnectionDetail.ServerName">
+            <summary>
+            Gets or sets the server ip or dns name of the crm server. NO HTTP/S or www prefixes nor any suffix, just 192.168.247.18 or something like that.
+            <para/>
+            Should always be set, except for O365 deployment type.
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmCommon.ConnectionDetail.ServerPort">
+            <summary>
+            The servers port where the crm organization is accessible.
+            <para />
+            May be empty if server port is 80.
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmCommon.ConnectionDetail.UseSsl">
+            <summary>
+            Determines whether to use HTTP or HTTPS. Default: false
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmCommon.ConnectionDetail.IsCustomAuth">
+            <summary>
+            Determines whether to use default credentials or provided ones. Default: true
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmCommon.ConnectionDetail.UserDomain">
+            <summary>
+            Gets or sets the user's domain used to login.
+            <para/>
+            Should always be set, except for O365 deployment type.
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmCommon.ConnectionDetail.UserName">
+            <summary>
+            Gets or sets the user name used to login.
+            For O365 make sure to use the e-mail address.
+            <para/>
+            Should always be set.
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmCommon.ConnectionDetail.UserPassword">
+            <summary>
+            Gets or sets the users password used to login.
+            Always use <see cref="M:Connectiv.XrmCommon.Common.PasswordUtil.EncryptPassword(System.String)"/> to save
+            an encrypted password here.
+            <para/>
+            Should always be set.
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmCommon.ConnectionDetail.SavePassword">
+            <summary>
+            Determines if the password shall be saved. This is used somewhere
+            within the microsoft component. Default: true
+            <para/>
+            Should always be set.
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmCommon.ConnectionDetail.CrmDeploymentType">
+            <summary>
+            Gets or sets the deployment type for this connection. Default: Prem
+            <para />
+            O365 - for online
+            <para />
+            Prem - for on premise and IFD
+            <para />
+            Online - for ??
+            <para/>
+            Should always be set.
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmCommon.ConnectionDetail.SqlServerIpOrName">
+            <summary>
+            Gets or sets the server ip or dns name of the sql server. NO HTTP/S or www prefixes nor any suffix, just 192.168.247.18 or something like that.
+            <para/>
+            Should only be set for OnPremise as this is only used by internal BuildTools like the CrmDevManager.
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmCommon.ConnectionDetail.SolutionName">
+            <summary>
+            Gets or sets the uniquename of a solution which is part of the crm organization
+            <para/>
+            Should only be set for OnPremise as this is only used by internal BuildTools like the git hooks.
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmCommon.ConnectionDetail.ExportOnCommit">
+            <summary>
+            Determines whether to export and version the configured <see cref="P:Connectiv.XrmCommon.ConnectionDetail.SolutionName"/> as part of a git commit.
+            Default: false
+            <para/>
+            Should only be set for OnPremise as this is only used by internal BuildTools like the git hooks.
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmCommon.ConnectionDetail.Timeout">
+            <summary>
+            Gets or sets the timeout for a connection in milliseconds. Default: 2 minutes.
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmCommon.ConnectionDetail.TimeoutTicks">
+            <summary>
+            Gets or sets the timeout for a connection in milliseconds. Default: 2 minutes.
+            This property only exists as fassade for xmlserialization for TimeSpan objects.
+            <para/>
+            Should always be set.
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmCommon.ConnectionDetail.Authority">
+            <summary>
+            Gets or sets the connections authority.
+            TODO: What is Authority used for? not set for Prem, IFD, O365
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmCommon.ConnectionDetail.AuthHomeRealm">
+            <summary>
+            Gets or sets the connections auth home realm.
+            TODO: Possible values: 
+            - "Active Directory" for OnPremise and Online
+            - "Internet-facing deployment(IFD)" for IFD
+            - *** for OAuth?
+            <para/>
+            Should always be set.
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmCommon.ConnectionDetail.CrmOnlineRegion">
+            <summary>
+            Gets or sets the online region.
+            Possible values:
+            - "EMEA" (means: Europe, Middle East, Asia)
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmCommon.ConnectionDetail.AdvancedCheck">
+            <summary>
+            Gets or sets the flag to execute an advanced check. Default: false.
+            This should be true for Online else false.
+            </summary>
+        </member>
+        <member name="F:Connectiv.XrmCommon.ConnectionDetail.WriteBufferPackageSize">
+            <summary>
+            Current Size of the WriteBuffer
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmCommon.ConnectionDetail.PasswordIsEmpty">
+            <summary>
+            Gets if the <see cref="P:Connectiv.XrmCommon.ConnectionDetail.UserPassword"/> is empty.
+            </summary>
+        </member>
+        <member name="M:Connectiv.XrmCommon.ConnectionDetail.FromConfigFileServerKeys(System.Collections.Generic.Dictionary{Microsoft.Xrm.Tooling.CrmConnectControl.Utility.Dynamics_ConfigFileServerKeys,System.Object})">
+            <summary>
+            Creates a new <see cref="T:Connectiv.XrmCommon.ConnectionDetail"/> instance based on the <paramref name="configKeys"/>.
+            </summary>
+            <param name="configKeys">Used to populate the new <see cref="T:Connectiv.XrmCommon.ConnectionDetail"/> instance.</param>
+            <returns>The new <see cref="T:Connectiv.XrmCommon.ConnectionDetail"/> instance.</returns>
+        </member>
+        <member name="M:Connectiv.XrmCommon.ConnectionDetail.SetConfigFileServerKeys(System.Collections.Generic.Dictionary{Microsoft.Xrm.Tooling.CrmConnectControl.Utility.Dynamics_ConfigFileServerKeys,System.Object})">
+            <summary>
+            Populates the current instance based on the <paramref name="configKeys"/>.
+            </summary>
+            <param name="configKeys">Used to populate the current instance.</param>
+            <returns>The current instance for the sake of the fluent interface.</returns>
+        </member>
+        <member name="M:Connectiv.XrmCommon.ConnectionDetail.ToConfigFileServerKeys">
+            <summary>
+            Parses the current values to a new Dictionary which can be used in a <see cref="T:Microsoft.Xrm.Tooling.CrmConnectControl.CrmConnectionManager"/>.
+            <see cref="P:Connectiv.XrmCommon.ConnectionDetail.UserPassword"/> will only be added if not empty.
+            </summary>
+            <returns>New Dictionary instance holding the values populates in the current instance.</returns>
+        </member>
+        <member name="M:Connectiv.XrmCommon.ConnectionDetail.SetPassword(System.String,System.Boolean)">
+            <summary>
+            Sets the <see cref="P:Connectiv.XrmCommon.ConnectionDetail.UserPassword"/> property if <paramref name="password"/> is not empty.
+            If <paramref name="isAlreadyEncrypted"/> is set to true, the password won't be encrypted before saving it.
+            </summary>
+            <param name="password">The password to encrypt and save.</param>
+            <param name="isAlreadyEncrypted">If false, password will be encrypted before saving it.</param>
+        </member>
+        <member name="M:Connectiv.XrmCommon.ConnectionDetail.Connect(System.Int32,System.Reflection.Assembly)">
+            <summary>
+            Creates a new <see cref="T:Connectiv.XrmCommon.CrmServiceConnection"/> instance using the details
+            provides within this instance, tries to establish a connection and
+            returns the newly created instance.
+            </summary>
+            <param name="maxTries">Timeout in seconds to wait for the connection to be established.</param>
+            <returns>A new and already connected <see cref="T:Connectiv.XrmCommon.CrmServiceConnection"/> instance.</returns>
+        </member>
+        <member name="M:Connectiv.XrmCommon.ConnectionDetail.Connect(Microsoft.Xrm.Tooling.CrmConnectControl.CrmConnectionManager,System.Int32)">
+            <summary>
+            Uses the <paramref name="conManager"/> to establish a new connection. 
+            Waits a maximum of <paramref name="maxTries"/> seconds before cancelling active checking, if
+            connection was successfully established.
+            Returns true, if connection was successfully established, else false.
+            </summary>
+            <param name="conManager">Used to connect to the crm. Will contain the connected service in the <see cref="P:Microsoft.Xrm.Tooling.CrmConnectControl.CrmConnectionManager.CrmSvc"/> property.</param>
+            <param name="maxTries">Timeout in seconds to wait for the connection to be established.</param>
+            <returns>True, if connection was successfully established.</returns>
+        </member>
+        <member name="M:Connectiv.XrmCommon.ConnectionDetail.cManager_CheckCompleted(System.Object,Microsoft.Xrm.Tooling.CrmConnectControl.ServerConnectStatusEventArgs)">
+            <summary>
+            Eventhandler that will be fired if the connection establish process was finished.
+            <paramref name="e"/> contains the information saying if establishing was successfull.
+            </summary>
+            <param name="sender">A <see cref="T:Microsoft.Xrm.Tooling.CrmConnectControl.CrmConnectionManager"/> instance.</param>
+            <param name="e">Information about the connection status.</param>
+        </member>
+        <member name="M:Connectiv.XrmCommon.ConnectionDetail.cManager_ConnectionUpdated(System.Object,Microsoft.Xrm.Tooling.CrmConnectControl.ServerConnectStatusEventArgs)">
+            <summary>
+            Eventhandler that will be fired once in a while establishing a connection.
+            <paramref name="e"/> contains the information saying if establishing was successfull.
+            </summary>
+            <param name="sender">A <see cref="T:Microsoft.Xrm.Tooling.CrmConnectControl.CrmConnectionManager"/> instance.</param>
+            <param name="e">Information about the current connection status.</param>
+        </member>
+        <member name="M:Connectiv.XrmCommon.ConnectionDetail.Clone">
+            <summary>
+            Creates a new <see cref="T:Connectiv.XrmCommon.ConnectionDetail"/> instance as a complete clone
+            of the current instance.
+            </summary>
+            <returns>The newly create instance.</returns>
+        </member>
+        <member name="M:Connectiv.XrmCommon.ConnectionDetail.GetClientCredentials">
+            <summary>
+            Creates a new <see cref="T:System.Net.NetworkCredential"/> instance having the credentials set as within this class.
+            This may be used to create a DeploymentServiceClient, see examble below, which is used to activate/deactivate/... organizations, etc.
+            </summary>
+            <example>
+            DeploymentServiceClient serviceClient = ProxyClientHelper.CreateClient(new Uri("http://" + connectionDetail.ServerName + "/XRMDeployment/2011/Deployment.svc"), new TimeSpan(0, 20, 0));
+            serviceClient.ClientCredentials.Windows.ClientCredential = connectionDetail.GetClientCredentials();
+            </example>
+            <returns>New instance of <see cref="T:System.Net.NetworkCredential"/>s.</returns>
+        </member>
+        <member name="T:Connectiv.XrmCommon.ConnectionRepositorySettings">
+            <summary>
+            XmlRoot for the connections file. Holds a list of all configured connections
+            and other global settings.
+            Will be used to de/serialized the connections file.
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmCommon.ConnectionRepositorySettings.DefaultConnectionIndex">
+            <summary>
+            Gets or sets the 0-based index which determines the connection
+            that shall be considered as default.
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmCommon.ConnectionRepositorySettings.ConnectionsList">
+            <summary>
+            Gets a list of all connections configured within the file.
+            </summary>
+        </member>
+        <member name="T:Connectiv.XrmCommon.Dataholder.IConfigurationInformation">
+            <summary>
+            Exposes information about the current config
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmCommon.Dataholder.IConfigurationInformation.Credentials">
+            <summary>
+            The Credentials to authenticate
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmCommon.Dataholder.IConfigurationInformation.TypeName">
+            <summary>
+            Name of the Type to use
+            </summary>
+        </member>
+        <member name="T:Connectiv.XrmCommon.Dataholder.ICrmInformation">
+            <summary>
+            Exposes information to establish a connection to a crm-server
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmCommon.Dataholder.ICrmInformation.SourceAddress">
+            <summary>
+            The Address of the CRM-Server
+            </summary>
+        </member>
+        <member name="T:Connectiv.XrmCommon.CrmConnectionRepository">
+            <summary>
+            Manages the list of all configured crm connections, like
+            - de/serializing the connections file,
+            - prompting the user to select a connection,
+            - providing a default connection.
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmCommon.CrmConnectionRepository.DefaultConnection">
+            <summary>
+            Gets the default connection instance. If exactly one connection
+            is contained within the <see cref="P:Connectiv.XrmCommon.CrmConnectionRepository.ConnectionsList"/>, then this connection
+            will be returned. 
+            If a <see cref="P:Connectiv.XrmCommon.ConnectionRepositorySettings.DefaultConnectionIndex"/> is 
+            set to a value less than the count of configured connections, then this connection
+            will be returned.
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmCommon.CrmConnectionRepository.SelectedConnection">
+            <summary>
+            Gets the currently selection connection instance. By default
+            will use the <see cref="P:Connectiv.XrmCommon.CrmConnectionRepository.DefaultConnection"/>. May be overriden
+            by the user. The connection set to this property will automatically
+            be added to the <see cref="P:Connectiv.XrmCommon.CrmConnectionRepository.ConnectionsList"/>.
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmCommon.CrmConnectionRepository.ConnectionsList">
+            <summary>
+            Gets the list of all configured connections.
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmCommon.CrmConnectionRepository.Settings">
+            <summary>
+            Gets or sets the global settings instance which will
+            be de/serialized to the connections file.
+            Automatically populates on first access.
+            
+            This is private to have a better control over de/serializing
+            and setting the <see cref="P:Connectiv.XrmCommon.ConnectionRepositorySettings.DefaultConnectionIndex"/>.
+            </summary>
+        </member>
+        <member name="F:Connectiv.XrmCommon.CrmConnectionRepository.DefaultConnectionFileName">
+            <summary>
+            Default filename for the connections file.
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmCommon.CrmConnectionRepository.FileName">
+            <summary>
+            Gets or set the path and name of the file where the connections shall be loaded
+            from / saved to.
+            </summary>
+        </member>
+        <member name="M:Connectiv.XrmCommon.CrmConnectionRepository.SaveToFile">
+            <summary>
+            Serializes the current <see cref="P:Connectiv.XrmCommon.CrmConnectionRepository.Settings"/> to the <see cref="P:Connectiv.XrmCommon.CrmConnectionRepository.FileName"/>.
+            </summary>
+        </member>
+        <member name="M:Connectiv.XrmCommon.CrmConnectionRepository.Refresh">
+            <summary>
+            Deserializes the <see cref="P:Connectiv.XrmCommon.CrmConnectionRepository.FileName"/> file and 
+            populates the values to the <see cref="!:Settigs"/> property.
+            </summary>
+        </member>
+        <member name="M:Connectiv.XrmCommon.CrmConnectionRepository.LoadFromFile">
+            <summary>
+            Deserializes the <see cref="P:Connectiv.XrmCommon.CrmConnectionRepository.FileName"/> as a new <see cref="T:Connectiv.XrmCommon.ConnectionRepositorySettings"/> instance
+            and returns the value. If the file does not exist, a new, empty <see cref="T:Connectiv.XrmCommon.ConnectionRepositorySettings"/> instance
+            will be returned.
+            </summary>
+            <returns>A new <see cref="T:Connectiv.XrmCommon.ConnectionRepositorySettings"/> instance.</returns>
+        </member>
+        <member name="M:Connectiv.XrmCommon.CrmConnectionRepository.SelectConnection">
+            <summary>
+            Prompts the user to select a connection from a list of connections.
+            If the connectionslist is empty or the user decides to add a new connection
+            a dialog will be opened.
+            If user cannot be prompted, because program is running as a service, the
+            <see cref="P:Connectiv.XrmCommon.CrmConnectionRepository.SelectedConnection"/> will be returned.
+            If user selected a connection the <see cref="P:Connectiv.XrmCommon.CrmConnectionRepository.SelectedConnection"/> will
+            be set to that connection, but not yet connected.
+            </summary>
+            <returns>The selected connection instance.</returns>
+        </member>
+        <member name="T:Connectiv.XrmCommon.ConnectionGui.LoginWindow.CrmLoginControl">
+            <summary>
+            Interaction logic for CrmLoginControl.xaml
+            </summary>
+            <summary>
+            CrmLoginControl
+            </summary>
+        </member>
+        <member name="M:Connectiv.XrmCommon.ConnectionGui.LoginWindow.CrmLoginControl.GetContent(System.Windows.UIElement)">
+            <summary>
+            Returns a list of all UIElements of this WPF. These elements will be updated with new data by the code.
+            This is currently the only way to populate the data to the UI, because there is no databinding. 
+            Code-Behind! Yeah! Work like a ch... shit.
+            Calls itself recursivly.
+            </summary>
+            <param name="content">The UIElement instance to analyse and get the childs/content from.</param>
+            <returns>List of all subelement of the current UIElement, including the element itself.</returns>
+        </member>
+        <member name="M:Connectiv.XrmCommon.ConnectionGui.LoginWindow.CrmLoginControl.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:Connectiv.XrmCommon.ConnectionGui.LoginWindow.LoginDialog">
+            <summary>
+            Interaction logic for CrmLogin.xaml
+            </summary>
+            <summary>
+            LoginDialog
+            </summary>
+        </member>
+        <member name="F:Connectiv.XrmCommon.ConnectionGui.LoginWindow.LoginDialog.ConnectionConfigFileExchangeKey">
+            <summary>
+            This key is required to share the configured filename through the AppDomains.
+            </summary>
+        </member>
+        <member name="M:Connectiv.XrmCommon.ConnectionGui.LoginWindow.LoginDialog.Open">
+            <summary>
+            Shows the WPF window in which the user may configure the connections.
+            </summary>
+        </member>
+        <member name="M:Connectiv.XrmCommon.ConnectionGui.LoginWindow.LoginDialog.Window_Loaded(System.Object,System.Windows.RoutedEventArgs)">
+            <summary>
+            Raised when the window loads for the first time. 
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:Connectiv.XrmCommon.ConnectionGui.LoginWindow.LoginDialog.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="M:Connectiv.XrmCommon.ConnectionGui.ViewModel.LoginDialogViewModel.ExportConfig">
+            <summary>
+            Prompts the user to select a path to save the current connections file to.
+            The path will also be used after saving the file. Make sure to save
+            the old path if you do not wish to lose the location.
+            </summary>
+        </member>
+        <member name="M:Connectiv.XrmCommon.ConnectionGui.ViewModel.LoginDialogViewModel.UpdateConnection">
+            <summary>
+            Updates the information of an existing connection.
+            </summary>
+        </member>
+        <member name="M:Connectiv.XrmCommon.ConnectionGui.ViewModel.LoginDialogViewModel.SaveAsNew">
+            <summary>
+            Adds the currently added data to the connections list and saves the file. Also adds
+            the connection to the dropdown-list and selects it.
+            </summary>
+        </member>
+        <member name="M:Connectiv.XrmCommon.ConnectionGui.ViewModel.LoginDialogViewModel.PopulateConnectionDetails">
+            <summary>
+            Executes some integrity checks and on success populates the latest
+            data from the UI to the <see cref="F:Connectiv.XrmCommon.ConnectionGui.ViewModel.LoginDialogViewModel.conDetail"/> instance.
+            </summary>
+            <returns>True, if all integrity checks passed, else false.</returns>
+        </member>
+        <member name="T:Connectiv.XrmCommon.ConsoleAppBase">
+            <summary>
+            Base class to provide logic for a Console Application based on the Common2-Framework
+            </summary>
+        </member>
+        <member name="F:Connectiv.XrmCommon.ConsoleAppBase._LoggerIntern">
+            <summary>
+            The internal logger - will always be "ConsoleAppBase"
+            </summary>
+        </member>
+        <member name="F:Connectiv.XrmCommon.ConsoleAppBase._DefaultLoggerName">
+            <summary>
+            The default LoggerName (will be set at runtime to the right implementation, e.g. the extended class of ConsoleAppBase)
+            </summary>
+        </member>
+        <member name="F:Connectiv.XrmCommon.ConsoleAppBase.Logger">
+            <summary>
+            The logger used in extended classes to reflect their concrete name
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmCommon.ConsoleAppBase._someMeaningfulLogicClassLoggerName">
+            <summary>
+            Loggername - can be set to change the default name of the protected logger, which is used in extended classes (concrete implementations)
+            </summary>
+        </member>
+        <member name="M:Connectiv.XrmCommon.ConsoleAppBase.Initialize">
+            <summary>
+            Contains basic Initializations needed for every init-method
+            </summary>
+        </member>
+        <member name="M:Connectiv.XrmCommon.ConsoleAppBase.InitBase(System.String[])">
+            <summary>
+            Initializes the ConsoleApp with cmd-args.
+            </summary>
+            <param name="args">https://connectiv.sharepoint.com/business/connectiv%20Produkte/OrganizationService.aspx</param>
+        </member>
+        <member name="M:Connectiv.XrmCommon.ConsoleAppBase.InitBase``1">
+            <summary>
+            Initialize the ConsoleApp with a bootstrapper-object and Dependency Injection via Unity
+            </summary>
+            <typeparam name="T">The type of the bootstrapper to use</typeparam>
+            <returns>An ILogic implementation used to run the custom logic</returns>
+        </member>
+        <member name="M:Connectiv.XrmCommon.ConsoleAppBase.InitBase(System.String,System.String)">
+            <summary>
+            Default constructor - uses McTools to load/ask for a crm-connection
+            <param name="loggerName">Set the name used by the logger to a custom value</param>
+            <param name="connectionName">Set the name of the connection to use</param>
+            </summary>
+        </member>
+        <member name="M:Connectiv.XrmCommon.ConsoleAppBase.LoadConnectionDetailFromList(System.String)">
+            <summary>
+            Load crm connections via UI/File. Will return a connection instance name <paramref name="connectionName"/>.
+            If parameter is not set the UI will be shown to the user who may then add a solution using the dialog.
+            </summary>
+            <exception cref="T:System.Exception">If <paramref name="connectionName"/> is set, but no connection is named like that.</exception>
+            <param name="connectionName">Name of a connection. If set, but not found an Exception will be thrown.</param>
+            <returns>An Object containing the details of the crm-connection</returns>
+        </member>
+        <member name="M:Connectiv.XrmCommon.ConsoleAppBase.CheckExecutingUser">
+            <summary>
+            Prints Information about the Executing User context - Displays a Warning if the Program is run in either Local System or Network Service Context.
+            </summary>
+        </member>
+        <member name="T:Connectiv.XrmCommon.ConsoleReader">
+            <summary>
+             Class to read user input within a given timeout
+            </summary>
+        </member>
+        <member name="T:Connectiv.XrmCommon.DefaultBootstrappedLogic">
+            <summary>
+            Abstract class to provide a Schema to provide logic initialized through bootstrapping mechanism.
+            </summary>
+        </member>
+        <member name="M:Connectiv.XrmCommon.DefaultBootstrappedLogic.CustomLogic">
+            <summary>
+            Implementation of the Customer logic to use.
+            </summary>
+        </member>
+        <member name="M:Connectiv.XrmCommon.DefaultBootstrappedLogic.Init">
+            <summary>
+            Any Initialization logic that should only be run once (at startup) goes in here.
+            </summary>
+        </member>
+        <member name="T:Connectiv.XrmCommon.DefaultBootstrapper">
+            <summary>
+            Base class for providing a Bootstrapper to load cutom logic and configure DI via Unity.
+            </summary>
+        </member>
+        <member name="M:Connectiv.XrmCommon.DefaultBootstrapper.InitContainer">
+            <summary>
+            Initializes the Unity container and ServiceLocator.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Connectiv.XrmCommon.DefaultBootstrapper.LoadConfiguration">
+            <summary>
+            Load configuration (from file, web, wherever...) here.
+            </summary>
+        </member>
+        <member name="M:Connectiv.XrmCommon.DefaultBootstrapper.InitLogic">
+            <summary>
+            Initialize the Logic the custom logic here.
+            </summary>
+            <returns>The custom logic-object</returns>
+        </member>
+        <member name="M:Connectiv.XrmCommon.DefaultBootstrapper.ConfigureContainer(Unity.UnityContainer)">
+            <summary>
+            Configure the DI-Unity container.
+            </summary>
+            <param name="container"></param>
+        </member>
+        <member name="T:Connectiv.XrmCommon.LogicBase">
+            <summary>
+            Base implementation of an object providing customer specific logic to the common-framework.
+            </summary>
+        </member>
+        <member name="F:Connectiv.XrmCommon.LogicBase._LoggerIntern">
+            <summary>
+            The internal logger used to log messages coming from the base implementation.
+            </summary>
+        </member>
+        <member name="F:Connectiv.XrmCommon.LogicBase.installationLocationWritten">
+            <summary>
+            Flag to set to true after the installationlocation-con_config has been written once to prevent flooding of con_config table.
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmCommon.LogicBase._lastSuccessfulStartTime">
+            <summary>
+            Returns the date of the last successful run's start - if never ran successfully will return LogicProvider._MinDate.
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmCommon.LogicBase._lastSuccessfulEndTime">
+            <summary>
+            Returns the date of the last successful run's end - if never ran successfully will return LogicProvider._MinDate.
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmCommon.LogicBase.skipWriteToCon_config">
+            <summary>
+            Determines whether the statistical values should be written to the CRM.
+            Default: false.
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmCommon.LogicBase.logInstallationMachineName">
+            <summary>
+            Determines whether the statistical values should be written to the CRM.
+            Default: false.
+            </summary>
+        </member>
+        <member name="F:Connectiv.XrmCommon.LogicBase._ResultOverview">
+            <summary>
+            TODO: document (AH)
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmCommon.LogicBase.CrmConnection">
+            <summary>
+            Gets the organization service.
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmCommon.LogicBase._service">
+            <summary>
+            Gets the default's organization Crm-service.
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmCommon.LogicBase._InitiatingUserId">
+            <summary>
+            Gets the GUID of the currently to the crm connected User.
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmCommon.LogicBase._queryHelper">
+            <summary>
+            Gets the helper class for CRM queries.
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmCommon.LogicBase._queryHelper2">
+            <summary>
+            Gets the helper class for CRM queries (2).
+            </summary>
+        </member>
+        <member name="M:Connectiv.XrmCommon.LogicBase.#ctor(Connectiv.XrmCommon.ConnectionDetail)">
+            <summary>
+            Initializes a new Object used to provide customer-logic to the common-framework.
+            </summary>
+            <param name="connectionDetail">The connection to use.</param>
+        </member>
+        <member name="M:Connectiv.XrmCommon.LogicBase.#ctor(System.String,Connectiv.XrmCommon.ConnectionDetail,System.Reflection.Assembly)">
+            <summary>
+            Initializes a new Object used to provide customer-logic to the common-framework.
+            </summary>
+            <param name="_loggername">The name to be used by the logger.</param>
+            <param name="connectionDetail">The connection to use.</param>
+        </member>
+        <member name="M:Connectiv.XrmCommon.LogicBase.#ctor(Connectiv.XrmCommon.CrmServiceConnection)">
+            <summary>
+            Initializes a new Object used to provide customer-logic to the common-framework.
+            </summary>
+            <param name="connectionDetail">The connection to use.</param>
+        </member>
+        <member name="M:Connectiv.XrmCommon.LogicBase.InitConnection(Connectiv.XrmCommon.CrmServiceConnection)">
+            <summary>
+            Initializes the CRM connection.
+            </summary>
+            <param name="connectionDetail">>The connection to use.</param>
+        </member>
+        <member name="M:Connectiv.XrmCommon.LogicBase.CustomLogic">
+            <summary>
+            Customer related logic.
+            </summary>
+        </member>
+        <member name="M:Connectiv.XrmCommon.LogicBase.Init">
+            <summary>
+            Initializes the Logic startup.
+            </summary>
+        </member>
+        <member name="M:Connectiv.XrmCommon.LogicBase.ExecuteBeforeCustomLogic">
+            <summary>
+            Method to provide Code that will be run before the customer specific logic is run.
+            </summary>
+        </member>
+        <member name="M:Connectiv.XrmCommon.LogicBase.ExecuteAfterCustomLogic">
+            <summary>
+            Method to provide Code that will be run after the customer specific logic is run.
+            </summary>
+        </member>
+        <member name="T:Connectiv.XrmCommon.LogicBase.ResultOverview">
+            <summary>
+            TODO: document (AH)
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmCommon.LogicBase.ResultOverview.WorkItems">
+            <summary>
+            TODO: document (AH)
+            </summary>
+        </member>
+        <member name="F:Connectiv.XrmCommon.LogicBase.ResultOverview.Creates">
+            <summary>
+            TODO: document (AH)
+            </summary>
+        </member>
+        <member name="F:Connectiv.XrmCommon.LogicBase.ResultOverview.Updates">
+            <summary>
+            TODO: document (AH)
+            </summary>
+        </member>
+        <member name="F:Connectiv.XrmCommon.LogicBase.ResultOverview.Warnings">
+            <summary>
+            TODO: document (AH)
+            </summary>
+        </member>
+        <member name="F:Connectiv.XrmCommon.LogicBase.ResultOverview.Errors">
+            <summary>
+            TODO: document (AH)
+            </summary>
+        </member>
+        <member name="F:Connectiv.XrmCommon.LogicBase.ResultOverview.ForeachCounter">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:Connectiv.XrmCommon.LogicBase.ResultOverview.Skipped">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Connectiv.XrmCommon.LogicBase.ResultOverview.#ctor">
+            <summary>
+            TODO: document (AH)
+            </summary>
+        </member>
+        <member name="M:Connectiv.XrmCommon.LogicBase.ResultOverview.ToString">
+            <summary>
+            TODO: document (AH)
+            </summary>
+        </member>
+        <member name="M:Connectiv.XrmCommon.LogicBase.ResultOverview.CalcProgress">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Connectiv.XrmCommon.LogicBase.ResultOverview.CalcProgressAndEstimatedTimeToFinish">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:Connectiv.XrmCommon.LogicBase.ResultOverview.MeanTimeDurations">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Connectiv.XrmCommon.LogicBase.ResultOverview.AddMeanTimeDuration(System.UInt32)">
+            <summary>
+            
+            </summary>
+            <param name="ms"></param>
+        </member>
+        <member name="F:Connectiv.XrmCommon.LogicBase.ResultOverview.CalcAllNdatasets">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Connectiv.XrmCommon.RunMode">
+            <summary>
+            Verschiedene Laufverhalten - einmalige ausführung im Haput, sowie in einem nebenläufigen Thread oder intervallgesteuert in einer Endlosschleife.
+            </summary>
+        </member>
+        <member name="F:Connectiv.XrmCommon.RunMode.RunOnce">
+            <summary>
+            Logic will be run once in the main thread.
+            </summary>
+        </member>
+        <member name="F:Connectiv.XrmCommon.RunMode.RunOnceInSeparateThread">
+            <summary>
+            Logic will be run once, but a new thread will be spawned.
+            </summary>
+        </member>
+        <member name="F:Connectiv.XrmCommon.RunMode.RunInLoop">
+            <summary>
+            the logic will loop, respecting the set intervall and running in a seperate thread.
+            </summary>
+        </member>
+        <member name="T:Connectiv.XrmCommon.AppConfiguration">
+            <summary>
+            Klasse zum speichern von Konfigurationen einer Anwendung
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmCommon.AppConfiguration.MimimumHeartBeatIntervall">
+            <summary>
+            Das minimale zeitintervall zwischen zwei heartbeats. Bei schneller aufeinanderfolgenden Anfragen werden keine Heartbeats gesendet.
+            Default: 5 Seconds.
+            </summary>
+        </member>
+        <member name="F:Connectiv.XrmCommon.AppConfiguration.respectDateTimeRunSuccessInformation">
+            <summary>
+            Determines whether the logic should check for the ".lastrun"-con_config to see, if something went wrong the last run.
+            Default: true.
+            </summary>
+        </member>
+        <member name="F:Connectiv.XrmCommon.AppConfiguration.AdditionalArguments">
+            <summary>
+            Zusätzliche Argumente der Kommandozeile.
+            </summary>
+        </member>
+        <member name="F:Connectiv.XrmCommon.AppConfiguration.SyncIntervall">
+            <summary>
+            Wartezeit zwischen zwei Logic-Durchläufen in Sekunden.
+            Default: 300.
+            </summary>
+        </member>
+        <member name="F:Connectiv.XrmCommon.AppConfiguration._SystemContextAllowed">
+            <summary>
+            Interne Speichervariablen, ob System-context für die Logic erlaubt ist.
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmCommon.AppConfiguration.CanBeRunInSystemContext">
+            <summary>
+            Legt fest, ob die Logik als "Netzwerkdienst" oder "Lokales System" ausgeführt werden darf - generiert Warnung, falls dies dennoch der Fall ist. 
+            Default: true.
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmCommon.AppConfiguration.UseHeartBeat">
+            <summary>
+            Determines whether the current running logic is using heartbeat-mechanic or not. 
+            Default: true.
+            </summary>
+        </member>
+        <member name="F:Connectiv.XrmCommon.AppConfiguration.UDPPort">
+            <summary>
+            Legt den Port für UDP-Heartbeats fest.
+            Default: -1.
+            </summary>
+        </member>
+        <member name="F:Connectiv.XrmCommon.AppConfiguration.assemblyVersion">
+            <summary>
+            Die aktuelle Version der DLL.
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmCommon.AppConfiguration.AssemblyVersion">
+            <summary>
+            Gets the current version of the current assembly.
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmCommon.AppConfiguration.CommonVersion">
+            <summary>
+            Gets the current version of the used xrmcommon2-framework
+            </summary>
+        </member>
+        <member name="T:Connectiv.XrmCommon.LogicProvider">
+            <summary>
+            Base Class to provide a executable custom logic to the Framework
+            </summary>
+        </member>
+        <member name="T:Connectiv.XrmCommon.AddressInformation">
+            <summary>
+            Serialization-Class to provide connection-address-Information as a XML-Serializable class.
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmCommon.AddressInformation.Type">
+            <summary>
+            Gets or sets the type of the connection.
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmCommon.AddressInformation.OrganizationName">
+            <summary>
+            Gets or sets the name of the organization.
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmCommon.AddressInformation.SQLConnectionString">
+            <summary>
+            Gets or sets the ConnectionString used to connect to the SQL-Database.
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmCommon.AddressInformation.ServiceAddress">
+            <summary>
+            Gets or sets the address used to connect to the service.
+            </summary>
+        </member>
+        <member name="M:Connectiv.XrmCommon.AddressInformation.#ctor">
+            <summary>
+            Initializes a new Object to contain and provide Address-information
+            </summary>
+        </member>
+        <member name="T:Connectiv.XrmCommon.CredentialsInfo">
+            <summary>
+            Serialization-Class to provide credentials-Information as a XML-Serializable class.
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmCommon.CredentialsInfo.UserName">
+            <summary>
+            Gets or sets the Username to connect.
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmCommon.CredentialsInfo.DomainName">
+            <summary>
+            Gets or sets the Domain name of the user.
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmCommon.CredentialsInfo.Password">
+            <summary>
+            Gets or sets the password to connect.
+            Password will be encrypted while setting. If encrypting fails,
+            the value will be asigned without modifying it.
+            </summary>
+        </member>
+        <member name="M:Connectiv.XrmCommon.CredentialsInfo.#ctor">
+            <summary>
+            Initializes a new Object to contain and provide Credentials to connect to a service.
+            </summary>
+        </member>
+        <member name="M:Connectiv.XrmCommon.CredentialsInfo.#ctor(System.String,System.String,System.String)">
+            <summary>
+            Initializes a new Object to contain and provide Credentials to connect to a service.
+            </summary>
+            <param name="userName">The user's name.</param>
+            <param name="domainName">The user's domain.</param>
+            <param name="password">The user's password.</param>
+        </member>
+        <member name="T:Connectiv.XrmCommon.CrmServiceConnection">
+            <summary>
+            Represents a single crm connection and provides additional information
+            about the connection.
+            </summary>
+        </member>
+        <member name="F:Connectiv.XrmCommon.CrmServiceConnection.impersonationLock">
+            <summary>
+            Lock to protect the service from subsequent calls, if an impersonation was set.
+            </summary>
+        </member>
+        <member name="F:Connectiv.XrmCommon.CrmServiceConnection.retryExceptionTypes">
+            <summary>
+            Enable retry mechanic on the following exception types. Default: TimeoutException.
+            If a service request fails with such type of an exception it will be reissued after waiting a short moment.
+            </summary>
+        </member>
+        <member name="F:Connectiv.XrmCommon.CrmServiceConnection.TimeOutWaitSeconds">
+            <summary>
+            Time to wait between retrying a CRM-call in case a timeout occured. Default 120 seconds.
+            </summary>
+        </member>
+        <member name="F:Connectiv.XrmCommon.CrmServiceConnection.NumberOfTimeoutRetries">
+            <summary>
+            Number of Retries for Timeouts on CRM-Calls (0 for none, -1 for infinite). Default: 0
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmCommon.CrmServiceConnection.ServerIs2013">
+            <summary>
+            Determines whether the server is a crm 2013 or not.
+            </summary>
+        </member>
+        <member name="F:Connectiv.XrmCommon.CrmServiceConnection._service">
+            <summary>
+            Gets the connection's service proxy.
+            Obsolete because in some Authentication Scenarios it can be null:
+            https://ramontebar.net/2020/03/17/organizationserviceproxy-is-null/
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmCommon.CrmServiceConnection.Service">
+            <summary>
+            Gets or sets the service used by this instance.
+            You may use this servive in addition, as it provides some features provided by MS itself.
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmCommon.CrmServiceConnection.WriteBuffer">
+            <summary>
+            Manages queued operations to the crm.
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmCommon.CrmServiceConnection.IsConnected">
+            <summary>
+            Determines whether the connection has already been established.
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmCommon.CrmServiceConnection.ConnectionExpired">
+            <summary>
+            Determines whether the internal timeout has been reached or not (uses an internal value and not the tokenlifetime).
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmCommon.CrmServiceConnection.ServceInitatedAt">
+            <summary>
+            Gets or sets the date, when the current service was established.
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmCommon.CrmServiceConnection.TokenExpiresEveryXMins">
+            <summary>
+            Gets or set the minutes after which the service should be re-created.
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmCommon.CrmServiceConnection.TokenExpirationKey">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmCommon.CrmServiceConnection.DeviceCredentials">
+            <summary>
+            Gets or sets the device credentials used to connect.
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmCommon.CrmServiceConnection.Organization">
+            <summary>
+            Gets or sets the currently connected CRM-Organization.
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmCommon.CrmServiceConnection.QH">
+            <summary>
+            Gets or set the helper instance for CRM-Operations.
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmCommon.CrmServiceConnection.QH2">
+            <summary>
+            Gets or set the helper instance for CRM-Operations (2)
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmCommon.CrmServiceConnection.ServerVersion">
+            <summary>
+            Gets the version of the currnently connected server.
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmCommon.CrmServiceConnection.AuthenticatedUser">
+            <summary>
+            Gets the currently authenticated user.
+            </summary>
+        </member>
+        <member name="F:Connectiv.XrmCommon.CrmServiceConnection.ConDetail">
+            <summary>
+            Details about the currently established connection.
+            </summary>
+        </member>
+        <member name="M:Connectiv.XrmCommon.CrmServiceConnection.#ctor(Connectiv.XrmCommon.ConnectionDetail)">
+            <summary>
+            Initializes a new Object to contain and provide Information and Operations of a CRM-Connection.
+            </summary>
+            <param name="cDetail">The details of the connection to use.</param>
+        </member>
+        <member name="M:Connectiv.XrmCommon.CrmServiceConnection.#ctor">
+            <summary>
+            Initializes a new Object to contain and provide Information and Operations of a CRM-Connection.
+            </summary>
+        </member>
+        <member name="M:Connectiv.XrmCommon.CrmServiceConnection.#ctor(Connectiv.XrmCommon.Dataholder.ICrmInformation)">
+            <summary>
+            Initializes a new Object to contain and provide Information and Operations of a CRM-Connection.
+            </summary>
+            <param name="tarInfo">The details of the connection to use.</param>
+        </member>
+        <member name="M:Connectiv.XrmCommon.CrmServiceConnection.#ctor(System.String[])">
+            <summary>
+            Initializes a new Object to contain and provide Information and Operations of a CRM-Connection.
+            </summary>
+            <param name="args">https://connectiv.sharepoint.com/business/connectiv%20Produkte/OrganizationService.aspx</param>
+        </member>
+        <member name="M:Connectiv.XrmCommon.CrmServiceConnection.PopulateConnectionDetailsBasedOnDeploymentType(System.String,System.String,Connectiv.XrmCommon.ConnectionDetail)">
+            <summary>
+            Populates the <paramref name="detailToPopulate"/> with the other arguments. In addition some other
+            properties will be populated which can be derived by the other args.
+            </summary>
+            <exception cref="T:System.ArgumentException">If <paramref name="configuredDeployment"/> is null or empty.</exception>
+            <param name="configuredDeployment">The deployment type of the configured crm organization. May be: "ONPREM*", "OL*", "IFD" or "OSDP". Defaults to "ONPREM".</param>
+            <param name="fullServerUrl">Used to determine is SSL is to be used.</param>
+            <param name="detailToPopulate">This instance will be populated.</param>
+        </member>
+        <member name="M:Connectiv.XrmCommon.CrmServiceConnection.ParseCmdArgs(System.String[])">
+            <summary>
+            Parses an [] of strings to genereate a crm-connection.
+            </summary>
+            <param name="args">https://connectiv.sharepoint.com/business/connectiv%20Produkte/OrganizationService.aspx</param>
+        </member>
+        <member name="M:Connectiv.XrmCommon.CrmServiceConnection.Connect(System.Int32,System.Reflection.Assembly)">
+            <summary>
+            Establishes a connection to the configured crm server.
+            </summary>
+            <exception cref="T:System.Exception">If no connection could be established.</exception>
+            <param name="maxTries">Timeout in seconds to wait for the connection to be established.</param>
+            <returns>The service connection.</returns>
+        </member>
+        <member name="M:Connectiv.XrmCommon.CrmServiceConnection.SetTokenExpirationTime">
+            <summary>
+            Gets and Sets the ExpirationTime based on con_config value if set in the currently connected CRM.
+            </summary>
+        </member>
+        <member name="M:Connectiv.XrmCommon.CrmServiceConnection.Create(Microsoft.Xrm.Sdk.Entity)">
+            <summary>
+            Creates a new Dataset in the CRM.
+            </summary>
+            <param name="entity">the entity to create.</param>
+            <returns>The Entites new Guid.</returns>
+        </member>
+        <member name="M:Connectiv.XrmCommon.CrmServiceConnection.Delete(System.String,System.Guid)">
+            <summary>
+            Deletes a Dataset from the crm.
+            </summary>
+            <param name="entityName">logicalname of the entity to delete.</param>
+            <param name="id">ID of the entity to delete.</param>
+        </member>
+        <member name="M:Connectiv.XrmCommon.CrmServiceConnection.Associate(System.String,System.Guid,Microsoft.Xrm.Sdk.Relationship,Microsoft.Xrm.Sdk.EntityReferenceCollection)">
+            <summary>
+            Associate an Entity with a collection of Entities.
+            </summary>
+            <param name="entityName">LogicalName of the Entity to associate.</param>
+            <param name="entityId">ID of the Entity to associate.</param>
+            <param name="relationship">The Relationship to be used to associate.</param>
+            <param name="relatedEntities">The lsit of entites to associate with.</param>
+        </member>
+        <member name="M:Connectiv.XrmCommon.CrmServiceConnection.Disassociate(System.String,System.Guid,Microsoft.Xrm.Sdk.Relationship,Microsoft.Xrm.Sdk.EntityReferenceCollection)">
+            <summary>
+            Disassociate an Entity with a collection of Entities.
+            </summary>
+            <param name="entityName">LogicalName of the Entity to disassociate.</param>
+            <param name="entityId">ID of the Entity to disassociate.</param>
+            <param name="relationship">The Relationship to be used to disassociate.</param>
+            <param name="relatedEntities">The lsit of entites to disassociate from.</param>
+        </member>
+        <member name="M:Connectiv.XrmCommon.CrmServiceConnection.Execute(Microsoft.Xrm.Sdk.OrganizationRequest)">
+            <summary>
+            Executes a request within the currently connected CRM.
+            </summary>
+            <param name="request">the request to execute.</param>
+            <returns>The requests return value.</returns>
+        </member>
+        <member name="M:Connectiv.XrmCommon.CrmServiceConnection.Execute(Microsoft.Xrm.Sdk.OrganizationRequest,System.Boolean)">
+            <summary>
+            Executes a request within the currently connected CRM
+            </summary>
+            <param name="request">the request to execute.</param>
+            <param name="doNotRetry">Skips the retry-mechanic if set to true.</param>
+            <returns>The requests return value.</returns>
+        </member>
+        <member name="M:Connectiv.XrmCommon.CrmServiceConnection.Retrieve(System.String,System.Guid,Microsoft.Xrm.Sdk.Query.ColumnSet)">
+            <summary>
+            Retrieves a specific Dataset from the CRM.
+            </summary>
+            <param name="entityName">LogicalName of the Entity to retrieve.</param>
+            <param name="id">ID of the Entity to retrieve.</param>
+            <param name="columnSet">Columns to Retrieve.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Connectiv.XrmCommon.CrmServiceConnection.RetrieveMultiple(Microsoft.Xrm.Sdk.Query.QueryBase)">
+            <summary>
+            Retrieves a Collection of entites based on a query.
+            </summary>
+            <param name="query">Query to select entites.</param>
+            <returns>Collection of entites matching the Query.</returns>
+        </member>
+        <member name="M:Connectiv.XrmCommon.CrmServiceConnection.Update(Microsoft.Xrm.Sdk.Entity)">
+            <summary>
+            Update a specific entity.
+            </summary>
+            <param name="entity">The entity to update, containing the new values.</param>
+        </member>
+        <member name="M:Connectiv.XrmCommon.CrmServiceConnection.AddRetryExceptionType(System.Exception)">
+            <summary>
+            Adds the type of the <paramref name="ex"/> to the list of <see cref="F:Connectiv.XrmCommon.CrmServiceConnection.retryExceptionTypes"/>.
+            </summary>
+            <param name="exc">The type of this exception will be added.</param>
+        </member>
+        <member name="M:Connectiv.XrmCommon.CrmServiceConnection.AddRetryExceptionType(System.Collections.Generic.IEnumerable{System.Exception})">
+            <summary>
+            Adds the types of the <paramref name="excs"/> to the list of <see cref="F:Connectiv.XrmCommon.CrmServiceConnection.retryExceptionTypes"/>.
+            </summary>
+            <param name="excs">The type of this exception will be added.</param>
+        </member>
+        <member name="T:Connectiv.XrmCommon.OrganizationDetails">
+            <summary>
+            Exposes details about the currently connected organization
+            </summary>
+        </member>
+        <member name="F:Connectiv.XrmCommon.OrganizationDetails.org">
+            <summary>
+            the crm-objet representating the organization
+            </summary>
+        </member>
+        <member name="M:Connectiv.XrmCommon.OrganizationDetails.#ctor(Microsoft.Xrm.Sdk.Entity)">
+            <summary>
+            Initializes a new Objectto be used for connecting to a crm
+            </summary>
+            <param name="organization"></param>
+        </member>
+        <member name="P:Connectiv.XrmCommon.OrganizationDetails.PriviledgedUserGroupId">
+            <summary>
+            ID of the current organization's privUserGroup
+            </summary>
+        </member>
+        <member name="T:Connectiv.XrmCommon.ILogging">
+            <summary>
+            Interface mainly used to provide easy access to logging-methods through an interface extension
+            </summary>
+        </member>
+        <member name="T:Connectiv.XrmCommon.ILoggingExtensions">
+            <summary>
+            The interface extension to provide the logging methods:
+            </summary>
+        </member>
+        <member name="M:Connectiv.XrmCommon.ILoggingExtensions.LogDebug(Connectiv.XrmCommon.ILogging,System.String,System.Boolean,System.String,System.String,System.Int32)">
+            <summary>
+            Logs a Debug Message.
+            </summary>
+            <param name="instance"></param>
+            <param name="Message"></param>
+            <param name="memberName"></param>
+            <param name="fileName"></param>
+            <param name="lineNumber"></param>
+        </member>
+        <member name="M:Connectiv.XrmCommon.ILoggingExtensions.LogInfo(Connectiv.XrmCommon.ILogging,System.String,System.Boolean,System.String,System.String,System.Int32)">
+            <summary>
+            Logs an Info Message.
+            </summary>
+            <param name="instance"></param>
+            <param name="Message"></param>
+            <param name="memberName"></param>
+            <param name="fileName"></param>
+            <param name="lineNumber"></param>
+        </member>
+        <member name="M:Connectiv.XrmCommon.ILoggingExtensions.LogError(Connectiv.XrmCommon.ILogging,System.String,System.String,System.String,System.Int32)">
+            <summary>
+            Logs an Error Message.
+            </summary>
+            <param name="instance"></param>
+            <param name="Message"></param>
+            <param name="memberName"></param>
+            <param name="fileName"></param>
+            <param name="lineNumber"></param>
+        </member>
+        <member name="M:Connectiv.XrmCommon.ILoggingExtensions.LogError(Connectiv.XrmCommon.ILogging,System.String,System.Exception,System.String,System.String,System.Int32)">
+            <summary>
+            Logs an Error Message.
+            </summary>
+            <param name="instance"></param>
+            <param name="Message"></param>
+            <param name="exc"></param>
+            <param name="memberName"></param>
+            <param name="fileName"></param>
+            <param name="lineNumber"></param>
+        </member>
+        <member name="M:Connectiv.XrmCommon.ILoggingExtensions.LogWarning(Connectiv.XrmCommon.ILogging,System.String,System.String,System.String,System.Int32)">
+            <summary>
+            Logs a Warning.
+            </summary>
+            <param name="instance"></param>
+            <param name="Message"></param>
+            <param name="memberName"></param>
+            <param name="fileName"></param>
+            <param name="lineNumber"></param>
+        </member>
+        <member name="M:Connectiv.XrmCommon.ILoggingExtensions.LogWarning(Connectiv.XrmCommon.ILogging,System.String,System.Exception,System.String,System.String,System.Int32)">
+            <summary>
+            Logs a Warning.
+            </summary>
+            <param name="instance"></param>
+            <param name="Message"></param>
+            <param name="exc"></param>
+            <param name="memberName"></param>
+            <param name="fileName"></param>
+            <param name="lineNumber"></param>
+        </member>
+        <member name="M:Connectiv.XrmCommon.ILoggingExtensions.LogFatal(Connectiv.XrmCommon.ILogging,System.String,System.String,System.String,System.Int32)">
+            <summary>
+            Logs a fatal Error.
+            </summary>
+            <param name="instance"></param>
+            <param name="Message"></param>
+            <param name="memberName"></param>
+            <param name="fileName"></param>
+            <param name="lineNumber"></param>
+        </member>
+        <member name="M:Connectiv.XrmCommon.ILoggingExtensions.LogFatal(Connectiv.XrmCommon.ILogging,System.String,System.Exception,System.String,System.String,System.Int32)">
+            <summary>
+            Log a fatal Error.
+            </summary>
+            <param name="instance"></param>
+            <param name="Message"></param>
+            <param name="exc"></param>
+            <param name="memberName"></param>
+            <param name="fileName"></param>
+            <param name="lineNumber"></param>
+        </member>
+        <member name="T:Connectiv.XrmCommon.Interfaces.ILogic">
+            <summary>
+            Interface to Provide a Logic to run to the Framework
+            </summary>
+        </member>
+        <member name="M:Connectiv.XrmCommon.Interfaces.ILogic.Init">
+            <summary>
+            Initialize everything needed for the Logic here...
+            </summary>
+        </member>
+        <member name="M:Connectiv.XrmCommon.Interfaces.ILogic.Run(Connectiv.XrmCommon.RunMode)">
+            <summary>
+            Start the Logic-Loop.
+            </summary>
+            <param name="selectedMode"></param>
+        </member>
+        <member name="M:Connectiv.XrmCommon.Interfaces.ILogic.CustomLogic">
+            <summary>
+            The Logic to be run every Loop.
+            </summary>
+        </member>
+        <member name="M:Connectiv.XrmCommon.Interfaces.ILogic.RequestStop">
+            <summary>
+            Request a stop of the currently running logic.
+            </summary>
+        </member>
+        <member name="F:Connectiv.XrmCommon.QueryHelper._startTime">
+            Time Messurement
+        </member>
+        <member name="M:Connectiv.XrmCommon.QueryHelper.#ctor(Microsoft.Xrm.Sdk.IOrganizationService)">
+            Time Messurement
+        </member>
+        <member name="M:Connectiv.XrmCommon.QueryHelper.Get_All_Active_Entities(System.String,System.String,System.String)">
+            <summary>
+            without Paging. Limit 5000 records
+            </summary>
+            <param name="entityName"></param>
+            <param name="attribName"></param>
+            <param name="attribValue"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Connectiv.XrmCommon.QueryHelper.GetAllActiveEntities(System.String,System.String,System.String,System.Boolean)">
+            <summary>
+            without Paging. Limit 5000 records
+            </summary>
+            <param name="entityName"></param>
+            <param name="attribName"></param>
+            <param name="attribValue"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Connectiv.XrmCommon.QueryHelper.GetAllActiveEntities(System.String,Microsoft.Xrm.Sdk.Query.ConditionExpression[],System.Boolean)">
+            <summary>
+            without Paging. Limit 5000 records
+            </summary>
+            <param name="entityName"></param>
+            <param name="addingConditions"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Connectiv.XrmCommon.QueryHelper.GetAllActiveEntities(System.String,Microsoft.Xrm.Sdk.Query.FilterExpression,System.Boolean)">
+            <summary>
+            without Paging. Limit 5000 records
+            </summary>
+            <param name="entityName"></param>
+            <param name="addingConditions"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Connectiv.XrmCommon.QueryHelper.GetAllEntities(System.String,Microsoft.Xrm.Sdk.Query.ConditionExpression[],System.Boolean)">
+            <summary>
+            without Paging. Limit 5000 records
+            </summary>
+            <param name="entityName"></param>
+            <param name="addingConditions"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Connectiv.XrmCommon.QueryHelper.GetAllActiveEntitiesByOneConditionExpr(System.String,System.String,System.String,System.Boolean)">
+            <summary>
+            with Paging. No record Limit
+            </summary>
+            <param name="entityName"></param>
+            <param name="attribName"></param>
+            <param name="attribValue"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Connectiv.XrmCommon.QueryHelper.GetAllEntitiesByOneConditionExpr(System.String,System.String,System.String,System.Boolean)">
+            <summary>
+            with Paging. No record Limit
+            </summary>
+            <param name="entityName"></param>
+            <param name="attribName"></param>
+            <param name="attribValue"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Connectiv.XrmCommon.QueryHelper.GetAllEntities(System.String,System.Boolean)">
+            <summary>
+            with Paging. No record Limit
+            </summary>
+            <param name="entityName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Connectiv.XrmCommon.QueryHelper.GetSingleDynamicByAttribute(System.String,Microsoft.Xrm.Sdk.Query.ColumnSet,System.String,System.Object)">
+            <summary>
+            
+            </summary>
+            <param name="entityName"></param>
+            <param name="returnColumns"></param>
+            <param name="attributeName"></param>
+            <param name="attributeValue"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Connectiv.XrmCommon.QueryHelper.GetconSettingValueByKey(System.String)">
+            <summary>
+            returns String.Empty if value is empty
+            </summary>
+            <param name="setting_name_CONFIGKEY"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Connectiv.XrmCommon.QueryHelper2.#ctor(Microsoft.Xrm.Sdk.IOrganizationService)">
+            <summary>
+            constructor
+            </summary>
+            <param name="crmOrgService"></param>
+        </member>
+        <member name="M:Connectiv.XrmCommon.QueryHelper2.GetAllActive(System.String,System.Boolean)">
+            <summary>
+            GetAllActive just the active ones from a specific entitytype. With paging (means no 5.000 records limit).
+            </summary>
+            <param name="entityName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Connectiv.XrmCommon.QueryHelper2.GetAllActive(System.String,Microsoft.Xrm.Sdk.Query.ColumnSet,System.Boolean)">
+            <summary>
+            GetAllActive just the active ones from a specific entitytype. With paging (means no 5.000 records limit).
+            </summary>
+            <param name="entityName"></param>
+            <param name="columnSet"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Connectiv.XrmCommon.QueryHelper2.GetAllActive(System.String,Microsoft.Xrm.Sdk.Query.ColumnSet,Microsoft.Xrm.Sdk.Query.ConditionExpression,System.Boolean)">
+            <summary>
+            
+            </summary>
+            <param name="entityName"></param>
+            <param name="columnSet"></param>
+            <param name="condExpr"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Connectiv.XrmCommon.QueryHelper2.GetAllActive(System.String,Microsoft.Xrm.Sdk.Query.ConditionExpression,System.Boolean)">
+            <summary>
+            GetAllActive just the active ones AND one ConditionExpression from a specific entitytype. With paging (means no 5.000 records limit).
+            </summary>
+            <param name="entityName"></param>
+            <param name="condExpr"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Connectiv.XrmCommon.QueryHelper2.GetAllActive(System.String,Microsoft.Xrm.Sdk.Query.FilterExpression,System.Boolean)">
+            <summary>
+            GetAllActive just the active ones AND one complex FilterExpression from a specific entitytype. With paging (means no 5.000 records limit).
+            </summary>
+            <param name="entityName"></param>
+            <param name="filterExpr"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Connectiv.XrmCommon.QueryHelper2.GetAllActive(System.String,Microsoft.Xrm.Sdk.Query.FilterExpression,Microsoft.Xrm.Sdk.Query.ColumnSet,System.Boolean)">
+            <summary>
+            
+            </summary>
+            <param name="entityName"></param>
+            <param name="filterExpr"></param>
+            <param name="columnSet"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Connectiv.XrmCommon.QueryHelper2.GetAllInactive(System.String,System.Boolean)">
+            <summary>
+            GetAllInactive just the active ones from a specific entitytype. With paging (means no 5.000 records limit).
+            </summary>
+            <param name="entityName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Connectiv.XrmCommon.QueryHelper2.GetAllInactive(System.String,Microsoft.Xrm.Sdk.Query.ColumnSet,System.Boolean)">
+            <summary>
+            GetAllActive just the active ones from a specific entitytype. With paging (means no 5.000 records limit).
+            </summary>
+            <param name="entityName"></param>
+            <param name="columnSet"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Connectiv.XrmCommon.QueryHelper2.GetAllInactive(System.String,Microsoft.Xrm.Sdk.Query.ColumnSet,Microsoft.Xrm.Sdk.Query.ConditionExpression,System.Boolean)">
+            <summary>
+            
+            </summary>
+            <param name="entityName"></param>
+            <param name="columnSet"></param>
+            <param name="condExpr"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Connectiv.XrmCommon.QueryHelper2.GetAllInactive(System.String,Microsoft.Xrm.Sdk.Query.ConditionExpression,System.Boolean)">
+            <summary>
+            GetAllInactive just the inactive ones AND one ConditionExpression from a specific entitytype. With paging (means no 5.000 records limit).
+            </summary>
+            <param name="entityName"></param>
+            <param name="condExpr"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Connectiv.XrmCommon.QueryHelper2.GetAllInactive(System.String,Microsoft.Xrm.Sdk.Query.FilterExpression,System.Boolean)">
+            <summary>
+            GetAllInactive just the inactive ones AND one complex FilterExpression from a specific entitytype. With paging (means no 5.000 records limit).
+            </summary>
+            <param name="entityName"></param>
+            <param name="filterExpr"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Connectiv.XrmCommon.QueryHelper2.GetAllInactive(System.String,Microsoft.Xrm.Sdk.Query.ColumnSet,Microsoft.Xrm.Sdk.Query.FilterExpression,System.Boolean)">
+            <summary>
+            
+            </summary>
+            <param name="entityName"></param>
+            <param name="filterExpr"></param>
+            <param name="columnSet"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Connectiv.XrmCommon.QueryHelper2.GetAll(System.String,System.Boolean)">
+            <summary>
+            GetAll active and inactive from a specific entitytype. With paging (means no 5.000 records limit).
+            </summary>
+            <param name="entityName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Connectiv.XrmCommon.QueryHelper2.GetAll(System.String,Microsoft.Xrm.Sdk.Query.ColumnSet,System.Boolean)">
+            <summary>
+            GetAll active and inactive from a specific entitytype. With paging (means no 5.000 records limit).
+            </summary>
+            <param name="entityName"></param>
+            <param name="cols"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Connectiv.XrmCommon.QueryHelper2.GetAllEntities(System.String,System.Boolean)">
+            <summary>
+            GetAll active and inactive from a specific entitytype. With paging (means no 5.000 records limit).
+            </summary>
+            <param name="entityName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Connectiv.XrmCommon.QueryHelper2.GetAllEntities(System.String,Microsoft.Xrm.Sdk.Query.ColumnSet,System.Boolean)">
+            <summary>
+            GetAllEntities active and inactive from a specific entitytype. With paging (means no 5.000 records limit).
+            </summary>
+            <param name="entityName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Connectiv.XrmCommon.QueryHelper2.GetAll(System.String,Microsoft.Xrm.Sdk.Query.FilterExpression,System.Boolean)">
+            <summary>
+            GetAllEntities active and inactive from a specific entitytype. With paging (means no 5.000 records limit).
+            </summary>
+            <param name="entityName"></param>
+            <param name="addingConditions"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Connectiv.XrmCommon.QueryHelper2.GetAllEntities(System.String,Microsoft.Xrm.Sdk.Query.FilterExpression,Microsoft.Xrm.Sdk.Query.ColumnSet,System.Boolean)">
+            <summary>
+            GetAllEntities active and inactive from a specific entitytype. With paging (means no 5.000 records limit).
+            </summary>
+            <param name="entityName"></param>
+            <param name="addingConditions"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Connectiv.XrmCommon.QueryHelper2.GetAllEntities(System.String,Microsoft.Xrm.Sdk.Query.ConditionExpression,System.Boolean)">
+            <summary>
+            GetAllEntities active and inactive from a specific entitytype. With paging (means no 5.000 records limit).
+            </summary>
+            <param name="entityName"></param>
+            <param name="condition"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Connectiv.XrmCommon.QueryHelper2.GetAllEntities(System.String,Microsoft.Xrm.Sdk.Query.ConditionExpression,Microsoft.Xrm.Sdk.Query.ColumnSet,System.Boolean)">
+            <summary>
+            GetAllEntities active and inactive from a specific entitytype. With paging (means no 5.000 records limit).
+            </summary>
+            <param name="entityName"></param>
+            <param name="condition"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Connectiv.XrmCommon.QueryHelper2.GetAll(Microsoft.Xrm.Sdk.Query.QueryExpression)">
+            <summary>
+            GetAll(QueryExpression queryex)
+            </summary>
+            <param name="queryex"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Connectiv.XrmCommon.QueryHelper2.GetAll``1(Microsoft.Xrm.Sdk.Query.ColumnSet,System.Boolean)">
+            <summary>
+            Lädt alle Datensätze des angegebenen Typs
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="cols"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Connectiv.XrmCommon.QueryHelper2.GetAll``1(Microsoft.Xrm.Sdk.Query.QueryExpression,System.Boolean)">
+            <summary>
+            Lädt alle Datensätze über eine Übergebene QueryExpression.
+            </summary>
+            <param name="EntityQuery">Der Ausdruck, um die gewünschten Datensätze zu finden.</param>
+            <returns>Liste aller Datensätze zu der übergebenen Anfrage</returns>
+        </member>
+        <member name="M:Connectiv.XrmCommon.QueryHelper2.GetAttributeValue``1(Microsoft.Xrm.Sdk.Entity,System.String,``0)">
+            <summary>
+            Gets a typed value or return a typed specific default Value.
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="entity"></param>
+            <param name="attributeLogicalName"></param>
+            <param name="defaultValue"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Connectiv.XrmCommon.QueryHelper2.GetAttributeValue``1(System.String,Microsoft.Xrm.Sdk.Entity,Microsoft.Xrm.Sdk.Entity)">
+            <summary>
+            Get a value from the target if present, otherwise from the preImage, otherwise returns default value(T)
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="attributeName"></param>
+            <param name="preImage"></param>
+            <param name="targetImage"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Connectiv.XrmCommon.QueryHelper2.GetAttributeValue``1(Microsoft.Xrm.Sdk.Entity,System.String)">
+            <summary>
+            Get a value from the entity if present, otherwise returns default value(T)
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="entity"></param>
+            <param name="attributeLogicalName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Connectiv.XrmCommon.QueryHelper2.splitList``1(System.Collections.Generic.List{``0},System.Int32)">
+            <summary>
+            Helper-Method to split a list into smaller chunks (used to query with lists and stay into limits)
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="elements"></param>
+            <param name="chunkSize"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Connectiv.XrmCommon.QueryHelper2.CreateXml(System.String,System.String,System.Int32,System.Int32)">
+            <summary>
+            Create a new XML-header for paged loading with fetchxmls
+            </summary>
+            <param name="xml"></param>
+            <param name="cookie"></param>
+            <param name="page"></param>
+            <param name="count"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Connectiv.XrmCommon.QueryHelper2.CreateXml(System.Xml.XmlDocument,System.String,System.Int32,System.Int32)">
+            <summary>
+            Create a new XML-header for paged loading with fetchxmls
+            </summary>
+            <param name="doc"></param>
+            <param name="cookie"></param>
+            <param name="page"></param>
+            <param name="count"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Connectiv.XrmCommon.BufferSizeChangedException">
+            <summary>
+            Exception raised when the Size of a buffer is changed.
+            </summary>
+        </member>
+        <member name="T:Connectiv.XrmCommon.TransmissionState">
+            <summary>
+            collection to set/get the result of an connection
+            </summary>
+        </member>
+        <member name="F:Connectiv.XrmCommon.TransmissionState.success">
+            <summary>
+            Transmission was successful
+            </summary>
+        </member>
+        <member name="F:Connectiv.XrmCommon.TransmissionState.error">
+            <summary>
+            the transmission resulted in an error
+            </summary>
+        </member>
+        <member name="T:Connectiv.XrmCommon.TransmissionData">
+            <summary>
+            Contains information abount a transmission of data
+            </summary>
+        </member>
+        <member name="F:Connectiv.XrmCommon.TransmissionData.defaultSuccessModifier">
+            <summary>
+            Determins, after how many successful transmissions, the package size should be increased
+            </summary>
+        </member>
+        <member name="M:Connectiv.XrmCommon.TransmissionData.#ctor(System.Int32)">
+            <summary>
+            Initializes a Object to handle data-transmissions and provide statistical information about transmissions and -history
+            </summary>
+            <param name="bufferSize">The initial size of the buffer</param>
+        </member>
+        <member name="P:Connectiv.XrmCommon.TransmissionData.InitialBufferSize">
+            <summary>
+            the default size of the buffer
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmCommon.TransmissionData.CurrentBufferSize">
+            <summary>
+            the current size of the buffer
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmCommon.TransmissionData.subSequentFails">
+            <summary>
+            Number of failed transmission in a row
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmCommon.TransmissionData.subSequentSuccesses">
+            <summary>
+            Number of successful transmission in a row
+            </summary>
+        </member>
+        <member name="M:Connectiv.XrmCommon.TransmissionData.AdjustBufferSize(Connectiv.XrmCommon.TransmissionState)">
+            <summary>
+            Adjusts the size of the Buffer depending on wheter the last transmission was susccessful or not
+            </summary>
+            <param name="state">the state of the last transmission</param>
+            <returns>the new buffersize</returns>
+        </member>
+        <member name="T:Connectiv.XrmCommon.CrmWriteBuffer">
+            <summary>
+            Provides Methods to perform queued CRM-Operations
+            </summary>
+        </member>
+        <member name="F:Connectiv.XrmCommon.CrmWriteBuffer.WaitMinutesOnTimeOut">
+            <summary>
+            Number of minutes to wait in case of a timeout to let the system process the data
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmCommon.CrmWriteBuffer.Default">
+            <summary>
+            The default Writebuffer - only set, if the Application connects to one crm at startup - NULL otherwise
+            </summary>
+        </member>
+        <member name="F:Connectiv.XrmCommon.CrmWriteBuffer.MaxRetriesOnError">
+            <summary>
+            Number of maximum retries before failing if the service is unreachable
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmCommon.CrmWriteBuffer.ContinueOnError">
+            <summary>
+            Determines, if the request should proceed after an error is thrown or abort
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmCommon.CrmWriteBuffer.ReturnResponses">
+            <summary>
+            determines, if responses should be returned and logged
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmCommon.CrmWriteBuffer.MaxBufferSize">
+            <summary>
+            The maximum buffersize never to be exceeded (the crm-default of 1k is used in default)
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmCommon.CrmWriteBuffer.BufferSize">
+            <summary>
+            The current size of the buffer
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmCommon.CrmWriteBuffer.TimerIntervall">
+            <summary>
+            the intervall, in which the buffer will be emptied if the threshold is not reached
+            </summary>
+        </member>
+        <member name="T:Connectiv.XrmCommon.CrmWriteBuffer.ExecuteMultipleResponseHandler">
+            <summary>
+            Handler for a successful operation
+            </summary>
+            <param name="sender"></param>
+            <param name="args">details about the operation</param>
+        </member>
+        <member name="T:Connectiv.XrmCommon.CrmWriteBuffer.ExecuteMultipleErrorHandler">
+            <summary>
+            Handler for a failed operation
+            </summary>
+            <param name="sender"></param>
+            <param name="args">details about the operation</param>
+        </member>
+        <member name="E:Connectiv.XrmCommon.CrmWriteBuffer.OnWriteResponse">
+            <summary>
+            Raised for every successful operation
+            </summary>
+        </member>
+        <member name="E:Connectiv.XrmCommon.CrmWriteBuffer.OnWriteError">
+            <summary>
+            raised for every operation that ran into an error
+            </summary>
+        </member>
+        <member name="F:Connectiv.XrmCommon.CrmWriteBuffer.syncLock">
+            <summary>
+            locks, if a transmission is currntly in progress
+            => prevents multplie transmission at the same time
+            </summary>
+        </member>
+        <member name="F:Connectiv.XrmCommon.CrmWriteBuffer.bufferLock">
+            <summary>
+            prevents concurrent access to the internal buffer
+            </summary>
+        </member>
+        <member name="F:Connectiv.XrmCommon.CrmWriteBuffer._statusLock">
+            <summary>
+            used to prevent concurrent access to statistics 
+            (e.g. prevents multiple transmissions for concurrent requests)
+            </summary>
+        </member>
+        <member name="F:Connectiv.XrmCommon.CrmWriteBuffer._listLock">
+            <summary>
+            handles access to the internal list of request
+            </summary>
+        </member>
+        <member name="F:Connectiv.XrmCommon.CrmWriteBuffer.completeDumpRequested">
+            <summary>
+            dump buffer, even if buffersive not exceeded?
+            </summary>
+        </member>
+        <member name="F:Connectiv.XrmCommon.CrmWriteBuffer.periodicWriter">
+            <summary>
+            timer to enable periodic execution of requests even if the buffersize is not exceeded
+            </summary>
+        </member>
+        <member name="F:Connectiv.XrmCommon.CrmWriteBuffer.contextCache">
+            <summary>
+            Dictionary to keep contexts of requests that should be returned in the callback
+            </summary>
+        </member>
+        <member name="F:Connectiv.XrmCommon.CrmWriteBuffer._requestBuffers">
+            <summary>
+            Buffer of requests to be executed
+            </summary>
+        </member>
+        <member name="M:Connectiv.XrmCommon.CrmWriteBuffer.#ctor(Connectiv.XrmCommon.CrmServiceConnection)">
+            <summary>
+            Initializes a new Object to queue and execute operations 
+            </summary>
+            <param name="connection">the connection to use</param>
+        </member>
+        <member name="M:Connectiv.XrmCommon.CrmWriteBuffer.TimerElapsed(System.Object)">
+            <summary>
+            Logic to be run, after the timer has elapsed
+            </summary>
+            <param name="state">the writebuffer-object to trigger the bufferdump</param>
+        </member>
+        <member name="M:Connectiv.XrmCommon.CrmWriteBuffer.ForceDump">
+            <summary>
+            Dumps the Buffer if there is at least one request pending
+            </summary>
+            <param name="instance">The writebuffer to start the Packagedump</param>
+        </member>
+        <member name="M:Connectiv.XrmCommon.CrmWriteBuffer.DumpBuffer">
+            <summary>
+            Dumps the Buffer if the buffersize has been exceeded
+            </summary>
+            <param name="instance">The writebuffer to start the Packagedump</param>
+        </member>
+        <member name="M:Connectiv.XrmCommon.CrmWriteBuffer.ForceDumpAsync">
+            <summary>
+            Forces an async dump of the buffer
+            (async currently not working)
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Connectiv.XrmCommon.CrmWriteBuffer.DumpBufferAsync">
+            <summary>
+            Checks, if the buffer exceeds maximumbuffersize and dumps the content, if true
+            (async currently not working)
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Connectiv.XrmCommon.CrmWriteBuffer.DumpBufferAsync(System.Boolean)">
+            <summary>
+            Checks, if the buffer exceeds maximumbuffersize and dumps the content
+            </summary>
+            <param name="ForceDump">If set to true, the Buffer will be always dumped, disregarding the maximum buffersize</param>
+            <returns></returns>
+        </member>
+        <member name="M:Connectiv.XrmCommon.CrmWriteBuffer.DumpPackages(System.Collections.Generic.List{System.Collections.Generic.List{Microsoft.Xrm.Sdk.OrganizationRequest}})">
+            <summary>
+            Dumps a List of Packages into the CRM
+            </summary>
+            <param name="packages">List of Packages (which are a list of requests)</param>
+            <returns></returns>
+        </member>
+        <member name="M:Connectiv.XrmCommon.CrmWriteBuffer.DumpPackage(Microsoft.Xrm.Sdk.Messages.ExecuteMultipleRequest)">
+            <summary>
+            Dumps one Package into the crm
+            </summary>
+            <param name="package">A package with requests to execute</param>
+            <returns></returns>
+        </member>
+        <member name="M:Connectiv.XrmCommon.CrmWriteBuffer.QueueSetState(System.Collections.Generic.IEnumerable{Microsoft.Xrm.Sdk.Entity},System.Int32)">
+            <summary>
+            Queues a list of SetState-Requests to be executed
+            </summary>
+            <param name="toSetState">the Entities to set the state on</param>
+            <param name="state">the state to set</param>
+        </member>
+        <member name="M:Connectiv.XrmCommon.CrmWriteBuffer.QueueSetState(System.Collections.Generic.IEnumerable{Microsoft.Xrm.Sdk.Entity},System.Int32,System.Int32)">
+            <summary>
+            Queues a list of SetState-Requests to be executed
+            </summary>
+            <param name="toSetState">the Entities to set the state on</param>
+            <param name="state">the state to set</param>
+            <param name="status">the status to set</param>
+        </member>
+        <member name="M:Connectiv.XrmCommon.CrmWriteBuffer.QueueSetState(Microsoft.Xrm.Sdk.Entity,System.Int32,System.String,System.Object)">
+            <summary>
+            Queues a SetState-Request to be executed
+            </summary>
+            <param name="toSetState">the Entity to set the state on</param>
+            <param name="state">the state to set</param>
+            <param name="ressourceKey">a key to be used to save and retrieve an operational context object</param>
+            <param name="context">an object to provide an operatiobnal context (will be returned in the callback-event)</param>
+        </member>
+        <member name="M:Connectiv.XrmCommon.CrmWriteBuffer.QueueSetState(Microsoft.Xrm.Sdk.Entity,System.Int32)">
+            <summary>
+            Queues a SetState-Request to be executed
+            </summary>
+            <param name="toSetState">the Entity to set the state on</param>
+            <param name="state">the state to set</param>
+        </member>
+        <member name="M:Connectiv.XrmCommon.CrmWriteBuffer.QueueSetState(Microsoft.Xrm.Sdk.Entity,System.Int32,System.Int32,System.String,System.Object)">
+            <summary>
+            Queues a SetState-Request to be executed
+            </summary>
+            <param name="toSetState">the Entity to set the state on</param>
+            <param name="state">the state to set</param>
+            <param name="status">the status to set</param>
+            <param name="ressourceKey">a key to be used to save and retrieve an operational context object</param>
+             <param name="context">an object to provide an operatiobnal context (will be returned in the callback-event)</param>
+        </member>
+        <member name="M:Connectiv.XrmCommon.CrmWriteBuffer.QueueSetState(Microsoft.Xrm.Sdk.Entity,System.Int32,System.Int32)">
+            <summary>
+            Queues a SetState-Request to be executed
+            </summary>
+            <param name="toSetState">the Entity to set the state on</param>
+            <param name="state">the state to set</param>
+            <param name="status">the status to set</param>
+        </member>
+        <member name="M:Connectiv.XrmCommon.CrmWriteBuffer.QueueDelete(System.Collections.Generic.IEnumerable{Microsoft.Xrm.Sdk.Entity})">
+            <summary>
+            Queues a Delete-Request to be executed
+            </summary>
+            <param name="toDelete">the Entity to delete</param>
+        </member>
+        <member name="M:Connectiv.XrmCommon.CrmWriteBuffer.QueueDelete(Microsoft.Xrm.Sdk.Entity,System.String,System.Object)">
+            <summary>
+            Queues a Delete-Request to be executed
+            </summary>
+            <param name="toDelete">the Entity to delete</param>
+            <param name="ressourceKey">a key to be used to save and retrieve an operational context object</param>
+             <param name="context">an object to provide an operatiobnal context (will be returned in the callback-event)</param>
+        </member>
+        <member name="M:Connectiv.XrmCommon.CrmWriteBuffer.QueueDelete(Microsoft.Xrm.Sdk.Entity)">
+            <summary>
+            Queues a Delete-Request to be executed
+            </summary>
+            <param name="toDelete">the Entity to delete</param>
+        </member>
+        <member name="M:Connectiv.XrmCommon.CrmWriteBuffer.QueueCreate(Microsoft.Xrm.Sdk.Entity,System.String)">
+            <summary>
+            Queues a Create-Request to be executed
+            </summary>
+            <param name="toCreate">the entity to create</param>
+            <param name="primKey">the primaryKey of the Entity (used to prevent duplicates on create-timeouts)</param>
+        </member>
+        <member name="M:Connectiv.XrmCommon.CrmWriteBuffer.QueueCreate(Microsoft.Xrm.Sdk.Entity,System.String,System.String,System.Object)">
+            <summary>
+            Queues a Create-Request to be executed
+            </summary>
+            <param name="toCreate">the entity to create</param>
+            <param name="primKey">the primaryKey of the Entity (used to prevent duplicates on create-timeouts)</param>
+            <param name="ressourceKey">a key to be used to save and retrieve an operational context object</param>
+             <param name="context">an object to provide an operatiobnal context (will be returned in the callback-event)</param>
+        </member>
+        <member name="M:Connectiv.XrmCommon.CrmWriteBuffer.QueueCreate(System.Collections.Generic.IEnumerable{Microsoft.Xrm.Sdk.Entity},System.String)">
+            <summary>
+            Queues a Create-Request to be executed
+            </summary>
+            <param name="toCreate">the entities to create</param>
+            <param name="primKey">the primaryKey of the Entity (used to prevent duplicates on create-timeouts)</param>
+        </member>
+        <member name="M:Connectiv.XrmCommon.CrmWriteBuffer.QueueCreate(Microsoft.Xrm.Sdk.Entity,System.String,System.Object)">
+            <summary>
+            Queues a Create-Request to be executed
+            </summary>
+            <param name="toCreate">the entity to create</param>
+            <param name="ressourceKey">a key to be used to save and retrieve an operational context object</param>
+             <param name="context">an object to provide an operatiobnal context (will be returned in the callback-event)</param>
+        </member>
+        <member name="M:Connectiv.XrmCommon.CrmWriteBuffer.QueueCreate(Microsoft.Xrm.Sdk.Entity)">
+            <summary>
+            Queues a Create-Request to be executed
+            </summary>
+            <param name="toCreate">the entity to create</param>
+        </member>
+        <member name="M:Connectiv.XrmCommon.CrmWriteBuffer.QueueCreate(System.Collections.Generic.IEnumerable{Microsoft.Xrm.Sdk.Entity})">
+            <summary>
+            Queues a Create-Request to be executed
+            </summary>
+            <param name="toCreate">the entities to create</param>
+        </member>
+        <member name="M:Connectiv.XrmCommon.CrmWriteBuffer.QueueUpdate(Microsoft.Xrm.Sdk.Entity,System.String,System.Object)">
+            <summary>
+            Queues an Update-Request to be executed
+            </summary>
+            <param name="toUpdate">the entity to update</param>
+            <param name="ressourceKey">a key to be used to save and retrieve an operational context object</param>
+             <param name="context">an object to provide an operatiobnal context (will be returned in the callback-event)</param>
+        </member>
+        <member name="M:Connectiv.XrmCommon.CrmWriteBuffer.QueueUpdate(Microsoft.Xrm.Sdk.Entity)">
+            <summary>
+            Queues an Update-Request to be executed
+            </summary>
+            <param name="toUpdate">the entity to update</param>
+        </member>
+        <member name="M:Connectiv.XrmCommon.CrmWriteBuffer.QueueUpdate(System.Collections.Generic.IEnumerable{Microsoft.Xrm.Sdk.Entity})">
+            <summary>
+            Queues an Update-Request to be executed
+            </summary>
+            <param name="toUpdate">the entities to update</param>
+        </member>
+        <member name="M:Connectiv.XrmCommon.CrmWriteBuffer.CheckForUR12">
+            <summary>
+            Checks, wheter UR12 is installed on the crm-server (prerequesite for multiplerequests)
+            </summary>
+            <returns>True, if UR12 is installed, false otherwise</returns>
+        </member>
+        <member name="M:Connectiv.XrmCommon.CrmWriteBuffer.QueueRequest(Microsoft.Xrm.Sdk.OrganizationRequest)">
+            <summary>
+            Queue a custom Request to be executed
+            </summary>
+            <param name="req">the Request to be Queued</param>
+        </member>
+        <member name="M:Connectiv.XrmCommon.CrmWriteBuffer.ResetContextCache">
+            <summary>
+            Clears all saved context objects
+            </summary>
+        </member>
+        <member name="T:Connectiv.XrmCommon.ExcecuteMultipleEventArgs">
+            <summary>
+            Object to provide detailed information about the result of an ExecuteMultipleRequest
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmCommon.ExcecuteMultipleEventArgs.Context">
+            <summary>
+            contains all provided contexts related to that entity
+            use the same key as provided in the queue-call to retrieve the specific context
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmCommon.ExcecuteMultipleEventArgs.Message">
+            <summary>
+            A Message containing details about the operation (Result, error, ...)
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmCommon.ExcecuteMultipleEventArgs.Target">
+            <summary>
+            The target (entity) of the operation
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmCommon.ExcecuteMultipleEventArgs.IsResponse">
+            <summary>
+            True, if the operation was successful (a 'response')
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmCommon.ExcecuteMultipleEventArgs.IsError">
+            <summary>
+            True, if the operation failed with an error
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmCommon.ExcecuteMultipleEventArgs.HasTarget">
+            <summary>
+            True, if the Operation has a target (entity9
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmCommon.ExcecuteMultipleEventArgs.Operation">
+            <summary>
+            the type of the operation
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmCommon.ExcecuteMultipleEventArgs.Response">
+            <summary>
+            The Response of the operation
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmCommon.ExcecuteMultipleEventArgs.Request">
+            <summary>
+            the executed request
+            </summary>
+        </member>
+        <member name="M:Connectiv.XrmCommon.ExcecuteMultipleEventArgs.#ctor(Microsoft.Xrm.Sdk.OrganizationRequest,Microsoft.Xrm.Sdk.ExecuteMultipleResponseItem)">
+            <summary>
+            Initializes a new Object to provide information about an executed Request
+            </summary>
+            <param name="request">The original request</param>
+            <param name="response">The response from the server</param>
+        </member>
+        <member name="M:Connectiv.XrmCommon.ExcecuteMultipleEventArgs.ToString">
+            <summary>
+            Generates a detailed String representation of the request and its result
+            </summary>
+            <returns>A detailed String representation of the request and its result</returns>
+        </member>
+        <member name="T:XamlGeneratedNamespace.GeneratedInternalTypeHelper">
+            <summary>
+            GeneratedInternalTypeHelper
+            </summary>
+        </member>
+        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.CreateInstance(System.Type,System.Globalization.CultureInfo)">
+            <summary>
+            CreateInstance
+            </summary>
+        </member>
+        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.GetPropertyValue(System.Reflection.PropertyInfo,System.Object,System.Globalization.CultureInfo)">
+            <summary>
+            GetPropertyValue
+            </summary>
+        </member>
+        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.SetPropertyValue(System.Reflection.PropertyInfo,System.Object,System.Object,System.Globalization.CultureInfo)">
+            <summary>
+            SetPropertyValue
+            </summary>
+        </member>
+        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.CreateDelegate(System.Type,System.Object,System.String)">
+            <summary>
+            CreateDelegate
+            </summary>
+        </member>
+        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.AddEventHandler(System.Reflection.EventInfo,System.Object,System.Delegate)">
+            <summary>
+            AddEventHandler
+            </summary>
+        </member>
+    </members>
+</doc>

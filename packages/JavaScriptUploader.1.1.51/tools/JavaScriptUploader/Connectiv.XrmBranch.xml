@@ -1,0 +1,2269 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Connectiv.XrmBranch</name>
+    </assembly>
+    <members>
+        <member name="T:Connectiv.XrmBranch.BasicInfo">
+            <summary>
+            Contains basic information not related to any specific system.
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmBranch.BasicInfo.ProjectName">
+            <summary>
+            Gets or sets the name of the whole project.
+            </summary>
+        </member>
+        <member name="T:Connectiv.XrmBranch.GeneralInfo">
+            <summary>
+            Central information class containing all
+            the information needed to create a new project or branch.
+            </summary>
+        </member>
+        <member name="F:Connectiv.XrmBranch.GeneralInfo.workingDir">
+            <summary>
+            Path to the root directory. I.e. Used
+            to initialize a git repo there.
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmBranch.GeneralInfo.WorkingDir">
+            <summary>
+            Gets or sets the path to the root directory. I.e. Used
+            to initialize a git repo there.
+            If the <see cref="P:Connectiv.XrmBranch.GeneralInfo.ProjectName"/> is set it will
+            automatically appended to the configured working directory.
+            </summary>
+        </member>
+        <member name="F:Connectiv.XrmBranch.GeneralInfo.orgInfo">
+            <summary>
+            Holds all the information related to CRM organizations.
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmBranch.GeneralInfo.OrgInfo">
+            <summary>
+            Gets the information object holding all the information related to CRM organizations.
+            </summary>
+        </member>
+        <member name="F:Connectiv.XrmBranch.GeneralInfo.gitLabInfo">
+            <summary>
+            Holds all the information related to the GitLab server. Used
+            to retrieve records and do actions on server side.
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmBranch.GeneralInfo.GitLabInfo">
+            <summary>
+            Gets the information object holding all the information related to the GitLab server. Used
+            to retrieve records and do actions on server side.
+            </summary>
+        </member>
+        <member name="F:Connectiv.XrmBranch.GeneralInfo.jenkinsInfo">
+            <summary>
+            Holds all the information related to the Jenkins server. Used
+            to retrieve records and do actions on server side.
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmBranch.GeneralInfo.JenkinsInfo">
+            <summary>
+            Gets the information object holding all the information related to the Jenkins server. Used
+            to retrieve records and do actions on server side.
+            </summary>
+        </member>
+        <member name="F:Connectiv.XrmBranch.GeneralInfo.vsSolutionInfo">
+            <summary>
+            Holds all the information needed to create a visual studio solution,
+            down to all C# projects.
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmBranch.GeneralInfo.VsSolutionInfo">
+            <summary>
+            Gets the information object holding all the information needed to create a visual studio solution,
+            down to all C# projects.
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmBranch.GeneralInfo.ProjectName">
+            <summary>
+            See <see cref="P:Connectiv.XrmBranch.BasicInfo.ProjectName"/> for further information. 
+            All the informationen classes in this GeneralInfo instance will
+            also have the value set. That is why no setter is provided
+            for the other information instances.
+            Maybe there is a better way to streamline the projectname and
+            have easy access to every other information class. One day
+            this class could be changed to match the complete correct fassade 
+            pattern. That means that this class need to implement every public
+            property of the information instances and redirect calls to the
+            classes. From the outside this would look like a single class
+            holding all the information and simplifies access to the properties.
+            </summary>
+        </member>
+        <member name="F:Connectiv.XrmBranch.GeneralInfo.createDoxyGenDocumenation">
+            <summary>
+            Determines whether to create a doxygen documentation
+            withing the jenkins build. 
+            Default: false
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmBranch.GeneralInfo.CreateDoxyGenDocumenation">
+            <summary>
+            Gets or sets a value indicating whether to create a doxygen documentation
+            withing the jenkins build. 
+            Default: false
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmBranch.GeneralInfo.AllowDevelopersToPushAndMergeMaster">
+            <summary>
+            Determines wether developers will be allowes to push and merge on the master branch.
+            </summary>
+        </member>
+        <member name="T:Connectiv.XrmBranch.GitLabBranch">
+            <summary>
+            Represents a branch in the GitLab server.
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmBranch.GitLabBranch.Name">
+            <summary>
+            Gets the Name of a branch within the GitLab server.
+            </summary>
+        </member>
+        <member name="M:Connectiv.XrmBranch.GitLabBranch.ToString">
+            <summary>
+            Gets the string representation of this object which is the branchname.
+            </summary>
+            <returns>The value of <see cref="P:Connectiv.XrmBranch.GitLabBranch.Name"/>.</returns>
+        </member>
+        <member name="T:Connectiv.XrmBranch.GitLabInfo">
+            <summary>
+            Provides properties needed to interact with
+            a GitLab server and one specific GitLab project.
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmBranch.GitLabInfo.Visibility">
+            <summary>
+            Gets or sets the value used creating a new project on the GitLab server.
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmBranch.GitLabInfo.Group">
+            <summary>
+            Gets or sets the GitLab group/namespace. Used to
+            provide correct urls and while creating projects.
+            </summary>
+        </member>
+        <member name="F:Connectiv.XrmBranch.GitLabInfo.token">
+            <summary>
+            Private GitLab access token.
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmBranch.GitLabInfo.PrivateToken">
+            <summary>
+            Gets or sets the private token used to authenticate within the GitLab server.
+            The returned value automatically prefixes the HTTP-request path.
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmBranch.GitLabInfo.UserName">
+            <summary>
+            Gets or sets the user. I.e. used to set the owner of a newly created project 
+            within the GitLab server. 
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmBranch.GitLabInfo.SecondGitlabMaster">
+            <summary>
+            Gets or sets another GitLab Master for a newly created project
+            within the GitLab server. 
+            </summary>
+        </member>
+        <member name="F:Connectiv.XrmBranch.GitLabInfo.projectId">
+            <summary>
+            Id of a project within the GitLab server.
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmBranch.GitLabInfo.ProjectId">
+            <summary>
+            Gets or sets the id of a project used in the GitLab server.
+            Will be set after a project was successfully created within the server.
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmBranch.GitLabInfo.ApiUrl">
+            <summary>
+            Gets url pointing to the api v3 url of the GitLab server.
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmBranch.GitLabInfo.HttpProjectUrl">
+            <summary>
+            Gets url to open the project in the browser. Needs the
+            <see cref="P:Connectiv.XrmBranch.BasicInfo.ProjectName"/> and <see cref="!:GitLabInfo.Group.Name"/> 
+            to have valid values.
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmBranch.GitLabInfo.HttpCloneProjectUrl">
+            <summary>
+            Gets the HTTP url to clone the repo using git. Needs the
+            <see cref="P:Connectiv.XrmBranch.BasicInfo.ProjectName"/> and <see cref="!:GitLabInfo.Group.Name"/> 
+            to have valid values.
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmBranch.GitLabInfo.SshCloneProjectUrl">
+            <summary>
+            Gets the SSH url to clone the repo using git. Needs the
+            <see cref="P:Connectiv.XrmBranch.BasicInfo.ProjectName"/> and <see cref="!:GitLabInfo.Group.Name"/> 
+            to have valid values.
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmBranch.GitLabInfo.BaseUrl">
+            <summary>
+            Gets base url to the root of the GitLab.
+            </summary>
+        </member>
+        <member name="T:Connectiv.XrmBranch.GitLabProject">
+            <summary>
+            Represents a project in the GitLab server.
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmBranch.GitLabProject.Id">
+            <summary>
+            Gets the ID of the project within the GitLab server.
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmBranch.GitLabProject.Name">
+            <summary>
+            Gets the Name of the project within the GitLab server.
+            </summary>
+        </member>
+        <member name="T:Connectiv.XrmBranch.GitLabUser">
+            <summary>
+            Represents a user in the GitLab server.
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmBranch.GitLabUser.Id">
+            <summary>
+            Gets the id of the GitLab user.
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmBranch.GitLabUser.Name">
+            <summary>
+            Gets the name of the GitLab user.
+            </summary>
+        </member>
+        <member name="M:Connectiv.XrmBranch.GitLabUser.ToString">
+            <summary>
+            Gets the string representation of this object which is the users name.
+            </summary>
+            <returns>The value of <see cref="P:Connectiv.XrmBranch.GitLabUser.Name"/>.</returns>
+        </member>
+        <member name="T:Connectiv.XrmBranch.GitLabObject">
+            <summary>
+            Basic object representing a GitLab item.
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmBranch.GitLabObject.Token">
+            <summary>
+            <para>
+            Gets or sets the token representing the parsed HTTP response
+            of a specific GitLab item.
+            </para>
+            <para>
+            Protected so that child classes can use it to 
+            provide easier and safer access.
+            </para>
+            <para>
+            Internal so that it can be set within project, as
+            the usage does not allow a ctor with the corresponding
+            arguments.
+            </para>
+            </summary>
+        </member>
+        <member name="T:Connectiv.XrmBranch.JenkinsInfo">
+            <summary>
+            Provides properties needed to interact with
+            a Jenkins server and one specific jenkins project.
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmBranch.JenkinsInfo.JobUrl">
+            <summary>
+            Gets the job url for one specific project.
+            Needs the <see cref="P:Connectiv.XrmBranch.BasicInfo.ProjectName"/> set
+            to return a valid value.
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmBranch.JenkinsInfo.CreateJenkinsBuild">
+            <summary>
+            Gets or sets a value indicating whether to create a jenkins build.
+            Default: true
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmBranch.JenkinsInfo.ProjectHasTests">
+            <summary>
+            Gets or sets a value indicating whether to create build steps proceeding 
+            unit and integration tests.
+            Default: true
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmBranch.JenkinsInfo.ProjectHasNuGet">
+            <summary>
+            Gets or sets a value indicating whether to create build steps creating 
+            a nuget package based on a nuspec file.
+            Default: false
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmBranch.JenkinsInfo.BasicUrl">
+            <summary>
+            Gets the basic url pointing to the Jenkins server.
+            </summary>
+        </member>
+        <member name="T:Connectiv.XrmBranch.OrganizationConfigInfo">
+            <summary>
+            Provides properties needed to interact with
+            a CRM organizations while creating a new project/branch.
+            </summary>
+        </member>
+        <member name="F:Connectiv.XrmBranch.OrganizationConfigInfo.logger">
+            <summary>
+            Logger instance for some debug messages.
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmBranch.OrganizationConfigInfo.Version">
+            <summary>
+            Gets or sets the CRM version which helps determining
+            the server to use.
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmBranch.OrganizationConfigInfo.TemplateDetails">
+            <summary>
+            Gets an instance of a ConnectionDetail object which is used by the McTools to
+            connect to a CRM server and also to save the information in xml format.
+            </summary>
+        </member>
+        <member name="F:Connectiv.XrmBranch.OrganizationConfigInfo.templateDetails">
+            <summary>
+            ConnectionDetails with all the default values set that work for
+            every c! dev organization.
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmBranch.OrganizationConfigInfo.TemplateOrganization">
+            <summary>
+            Gets or sets the template organization which will
+            be used while copying an organization.
+            Default: "Template"
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmBranch.OrganizationConfigInfo.CreateDevOrg">
+            <summary>
+            Gets or sets a value indicating whether to create a crm dev organization.
+            Default: true
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmBranch.OrganizationConfigInfo.CreateTestOrg">
+            <summary>
+            Gets or sets a value indicating whether to create a crm test organization.
+            Default: true
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmBranch.OrganizationConfigInfo.AddCrmSolutionToDev">
+            <summary>
+            Gets or sets a value indicating whether to add unmanaged solution with connectiv as publisher.
+            Default: true
+            </summary>
+        </member>
+        <member name="F:Connectiv.XrmBranch.OrganizationConfigInfo.versionToCrmIp">
+            <summary>
+            Helper dictionary resolving the version to a tuple of internally used 
+            crm and SQL servers.
+            The tuples first item is the url of the application server, the second item
+            contains the url of the SQL server.
+            </summary>
+        </member>
+        <member name="M:Connectiv.XrmBranch.OrganizationConfigInfo.GetVersionByUrl(System.String)">
+            <summary>
+            Gets the crm version by the url. Base are our internally used servers and the online
+            url for europe which points to crm 16.
+            </summary>
+            <param name="url">Url used to get the crm version from.</param>
+            <returns>Crm version installed on that server.</returns>
+        </member>
+        <member name="T:Connectiv.XrmBranch.VsSolutionInfo">
+            <summary>
+            Provides properties needed to interact with a visual studio. 
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmBranch.VsSolutionInfo.Version">
+            <summary>
+            Gets or sets the visual studio version that will
+            be used to create the visual studio solution.
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmBranch.VsSolutionInfo.Projects">
+            <summary>
+            Gets the list of all projects to be created.
+            </summary>
+        </member>
+        <member name="T:Connectiv.XrmBranch.ImportSolutionException">
+            <summary>
+            Represents an exception that occured during a solution import.
+            </summary>
+        </member>
+        <member name="M:Connectiv.XrmBranch.ImportSolutionException.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Connectiv.XrmBranch.ImportSolutionException"/> class.
+            </summary>
+            <param name="message">For further info see: <see cref="M:System.Exception.#ctor(System.String)"/></param>
+        </member>
+        <member name="T:Connectiv.XrmBranch.LoggingManager">
+            <summary>
+            Logging wrapper using Log4Net and providing additional functionality for logmessages.
+            Uses the decorator pattern to extend the functionality (means it redirects calls to the instance
+            that whould normally be called instead of this one and also does some pre and post logic).
+            </summary>
+        </member>
+        <member name="F:Connectiv.XrmBranch.LoggingManager.logger">
+            <summary>
+            Logger instance which would normally be held instead
+            of this class.
+            </summary>
+        </member>
+        <member name="M:Connectiv.XrmBranch.LoggingManager.#ctor(log4net.ILog)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Connectiv.XrmBranch.LoggingManager"/> class.
+            </summary>
+            <param name="classLogger">Log4Net logger normally used for logging.</param>
+        </member>
+        <member name="M:Connectiv.XrmBranch.LoggingManager.LogLink(System.String)">
+            <summary>
+            Logs the message as a valid HTML-Link which will open on a new tab/window.
+            <paramref name="link"/> needs to start with "www.", "http://", "git@" or "\\",
+            else "http://" will automatically be added.
+            </summary>
+            <param name="link">A valid url that will be set a href link.</param>
+        </member>
+        <member name="M:Connectiv.XrmBranch.LoggingManager.Error(System.String,System.Exception,System.Boolean)">
+            <summary>
+            See <see cref="M:log4net.ILog.Error(System.Object,System.Exception)"/>.
+            </summary>
+            <param name="msg">The message to log.</param>
+            <param name="exc">The exception to log, including its stacktrace. Will be ignored if null.</param>
+            <param name="encodeHTML">If true, the <paramref name="msg"/> will be Html encoded before being logged.</param>
+        </member>
+        <member name="M:Connectiv.XrmBranch.LoggingManager.Error(System.String,System.Boolean)">
+            <summary>
+            See <see cref="M:log4net.ILog.Error(System.Object)"/>.
+            </summary>
+            <param name="msg">The message to log.</param>
+            <param name="encodeHTML">If true, the <paramref name="msg"/> will be Html encoded before being logged.</param>
+        </member>
+        <member name="M:Connectiv.XrmBranch.LoggingManager.Error(System.String,System.Exception)">
+            <summary>
+            See <see cref="M:log4net.ILog.Error(System.Object,System.Exception)"/>. The <paramref name="msg"/> will be Html encoded before being logged.
+            </summary>
+            <param name="msg">The message to log.</param>
+            <param name="exc">The exception to log, including its stacktrace. Will be ignored if null.</param>
+        </member>
+        <member name="M:Connectiv.XrmBranch.LoggingManager.Error(System.String)">
+            <summary>
+            See <see cref="M:log4net.ILog.Error(System.Object)"/>. The <paramref name="msg"/> will be Html encoded before being logged.
+            </summary>
+            <param name="msg">The message to log.</param>
+        </member>
+        <member name="M:Connectiv.XrmBranch.LoggingManager.Warn(System.String,System.Exception,System.Boolean)">
+            <summary>
+            See <see cref="M:log4net.ILog.Warn(System.Object,System.Exception)"/>.
+            </summary>
+            <param name="msg">The message to log.</param>
+            <param name="exc">The exception to log, including its stacktrace. Will be ignored if null.</param>
+            <param name="encodeHTML">If true, the <paramref name="msg"/> will be Html encoded before being logged.</param>
+        </member>
+        <member name="M:Connectiv.XrmBranch.LoggingManager.Warn(System.String,System.Boolean)">
+            <summary>
+            See <see cref="M:log4net.ILog.Warn(System.Object)"/>.
+            </summary>
+            <param name="msg">The message to log.</param>
+            <param name="encodeHTML">If true, the <paramref name="msg"/> will be Html encoded before being logged.</param>
+        </member>
+        <member name="M:Connectiv.XrmBranch.LoggingManager.Warn(System.String,System.Exception)">
+            <summary>
+            See <see cref="M:log4net.ILog.Warn(System.Object,System.Exception)"/>. The <paramref name="msg"/> will be Html encoded before being logged.
+            </summary>
+            <param name="msg">The message to log.</param>
+            <param name="exc">The exception to log, including its stacktrace. Will be ignored if null.</param>
+        </member>
+        <member name="M:Connectiv.XrmBranch.LoggingManager.Warn(System.String)">
+            <summary>
+            See <see cref="M:log4net.ILog.Warn(System.Object)"/>. The <paramref name="msg"/> will be Html encoded before being logged.
+            </summary>
+            <param name="msg">The message to log.</param>
+        </member>
+        <member name="M:Connectiv.XrmBranch.LoggingManager.Info(System.String,System.Boolean)">
+            <summary>
+            See <see cref="M:log4net.ILog.Info(System.Object)"/>.
+            </summary>
+            <param name="msg">The message to log.</param>
+            <param name="encodeHTML">If true, the <paramref name="msg"/> will be Html encoded before being logged.</param>
+        </member>
+        <member name="M:Connectiv.XrmBranch.LoggingManager.Info(System.String)">
+            <summary>
+            See <see cref="M:log4net.ILog.Info(System.Object)"/>. The <paramref name="msg"/> will be Html encoded before being logged.
+            </summary>
+            <param name="msg">The message to log.</param>
+        </member>
+        <member name="M:Connectiv.XrmBranch.LoggingManager.Debug(System.String,System.Boolean)">
+            <summary>
+            See <see cref="M:log4net.ILog.Debug(System.Object)"/>.
+            </summary>
+            <param name="msg">The message to log.</param>
+            <param name="encodeHTML">If true, the <paramref name="msg"/> will be Html encoded before being logged.</param>
+        </member>
+        <member name="M:Connectiv.XrmBranch.LoggingManager.Debug(System.String)">
+            <summary>
+            See <see cref="M:log4net.ILog.Debug(System.Object)"/>. The <paramref name="msg"/> will be Html encoded before being logged.
+            </summary>
+            <param name="msg">The message to log.</param>
+        </member>
+        <member name="T:Connectiv.XrmBranch.OrganizationImportException">
+            <summary>
+            Represents an exception that occured during an organization import.
+            </summary>
+        </member>
+        <member name="M:Connectiv.XrmBranch.OrganizationImportException.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the<see cref="T:Connectiv.XrmBranch.OrganizationImportException"/> class.
+            </summary>
+            <param name="message">For further info see: <see cref="M:System.Exception.#ctor(System.String)"/></param>
+        </member>
+        <member name="M:Connectiv.XrmBranch.NodeLanguageCodeComparer.Compare(System.Xml.Linq.XElement,System.Xml.Linq.XElement)">
+            <summary>
+            Compares two nodes by the languagecode attribute
+            </summary>
+            <param name="x">first node</param>
+            <param name="y">second node</param>
+            <returns> bigger than 0: x is bigger, equals 0: x and y is same, less than 0: y is bigger </returns>
+        </member>
+        <member name="F:Connectiv.XrmBranch.SortSolutionXml.whitelistLanguageCode">
+            <summary>
+             XElements wich childs get sorted
+             case sensitive!
+            </summary>
+        </member>
+        <member name="F:Connectiv.XrmBranch.SortSolutionXml.cores">
+            <summary>
+            Threadning variables
+            </summary>
+        </member>
+        <member name="M:Connectiv.XrmBranch.SortSolutionXml.SortXml(System.String[])">
+            <summary>
+            Sorts all given Xml files
+            uses multi threadning, max amount of threads are core amount *2
+            and await all threads to finish before exit the function
+            </summary>
+            <param name="paths">all paths of the files to sort</param>
+        </member>
+        <member name="M:Connectiv.XrmBranch.SortSolutionXml.SortOneXml(System.Object)">
+            <summary>
+            Sorts one Xml and set threadWaitHandle if all threads are finished.
+            </summary>
+            <param name="pathObj">The path string as an object.</param>
+        </member>
+        <member name="M:Connectiv.XrmBranch.SortSolutionXml.Dive(System.Collections.Generic.IEnumerable{System.Xml.Linq.XElement})">
+            <summary>
+            Rekrusively looking for whitelisted elements, if found
+            the element childs gets sorted.
+            </summary>
+            <param name="elem">All Elements to run through.</param>
+        </member>
+        <member name="M:Connectiv.XrmBranch.SortSolutionXml.SortChildsByLanguagecode(System.Xml.Linq.XElement)">
+            <summary>
+            Sorts all children by languagecode.
+            </summary>
+            <param name="elem"></param>
+        </member>
+        <member name="T:Connectiv.XrmBranch.BasicManager">
+            <summary>
+            Parentclass for als managers providing some
+            basic functionality for beautifull code execution.
+            </summary>
+        </member>
+        <member name="M:Connectiv.XrmBranch.BasicManager.ExecuteInTryCatch``2(System.Func{``0,``1},``0,System.String)">
+            <summary>
+            Invokes the passed <paramref name="function"/> with the <paramref name="arg"/> in a try catch block.
+            The exception will then be logged with the messages in <paramref name="messageIfError"/>.
+            </summary>
+            <typeparam name="TInput">Type of the argument passed to the function.</typeparam>
+            <typeparam name="TResult">Type of functions return value.</typeparam>
+            <param name="function">Function that will be invoked.</param>
+            <param name="arg">Will be passed to the function upon invokation.</param>
+            <param name="messageIfError">Will be printed as error message, if any exception occured.</param>
+            <returns>The functions result.</returns>
+        </member>
+        <member name="M:Connectiv.XrmBranch.BasicManager.ExecuteInTryCatch``3(System.Func{``0,``1,``2},``0,``1,System.String)">
+            <summary>
+            Invokes the passed <paramref name="function"/> with the <paramref name="arg"/> and <paramref name="arg2"/> in a try catch block.
+            The exception will then be logged with the messages in <paramref name="messageIfError"/>.
+            </summary>
+            <typeparam name="TInput">Type of the argument passed to the function.</typeparam>
+            <typeparam name="TInput2">Type of the second argument passed to the function.</typeparam>
+            <typeparam name="TResult">Type of functions return value.</typeparam>
+            <param name="function">Function that will be invoked.</param>
+            <param name="arg">Will be passed as first argument to the function upon invokation.</param>
+            <param name="arg2">Will be passed as second argument to the function upon invokation.</param>
+            <param name="messageIfError">Will be printed as error message, if any exception occured.</param>
+            <returns>The functions result.</returns>
+        </member>
+        <member name="T:Connectiv.XrmBranch.CrmVersion">
+            <summary>
+            Supported Crm versions.
+            Remove 2011 when not used anymore.
+            V 9 = Major Release 9.0 (aka Dynamics 365 July Update)
+            </summary>
+        </member>
+        <member name="T:Connectiv.XrmBranch.VsVersion">
+            <summary>
+            Supported Visual Studio versions.
+            Remove V12 when not supported anymore.
+            Integer values need to be set the way,
+            Microsoft chooses them as internal numbers.
+            I.e. the installation path will be choosen
+            based on this number.
+            </summary>
+        </member>
+        <member name="T:Connectiv.XrmBranch.VsProjectType">
+            <summary>
+            Supported project types while creating 
+            a new visual studio solution.
+            Integer values are manually chosen and
+            do not indicate further information.
+            </summary>
+        </member>
+        <member name="T:Connectiv.XrmBranch.GitLabVisibility">
+            <summary>
+            Supported visibilities in GitLab.
+            Integer values are as in GitLab configured.
+            http://doc.gitlab.com/ee/api/projects.html#create-project
+            </summary>
+        </member>
+        <member name="F:Connectiv.XrmBranch.GitLabVisibility.Error">
+            <summary>
+            Indicates an error parsing a string value.
+            </summary>
+        </member>
+        <member name="F:Connectiv.XrmBranch.GitLabVisibility.Private">
+            <summary>
+            Use this for private projects.
+            </summary>
+        </member>
+        <member name="F:Connectiv.XrmBranch.GitLabVisibility.Internal">
+            <summary>
+            Our default value.
+            </summary>
+        </member>
+        <member name="F:Connectiv.XrmBranch.GitLabVisibility.Public">
+            <summary>
+            Projects will be created completly public. 
+            Should only be used with valid reason.
+            </summary>
+        </member>
+        <member name="T:Connectiv.XrmBranch.GitLabGroup">
+            <summary>
+            Represents a group or namespace in the GitLab server.
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmBranch.GitLabGroup.Id">
+            <summary>
+            Gets the Id of the group/namespace within the GitLab server.
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmBranch.GitLabGroup.Name">
+            <summary>
+            Gets the Name of the group/namespace within the GitLab server.
+            </summary>
+        </member>
+        <member name="T:Connectiv.XrmBranch.GitLabManager">
+            <summary>
+            Manager class providing methods to work with a GitLab server.
+            Class is mainly static and methods need a GitLabInfo
+            object to work.
+            GitLab API Documentation:
+            http://doc.gitlab.com/ce/api/README.html
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmBranch.GitLabManager.Groups">
+            <summary>
+            Gets the list of all GitLab groups/namespace.
+            Will be filled using <see cref="!:GetUsersGroups(GitLabInfo)"/> function. 
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmBranch.GitLabManager.Users">
+            <summary>
+            Gets the list of all GitLab users.
+            Will be filled using <see cref="!:GetAllUserData(GitLabInfo)"/> function.
+            </summary>
+        </member>
+        <member name="M:Connectiv.XrmBranch.GitLabManager.CreateProject(Connectiv.XrmBranch.GeneralInfo)">
+            <summary>
+            Creates a new GitLab project and sets the returned id to the
+            <see cref="P:Connectiv.XrmBranch.GitLabInfo.ProjectId"/>.
+            </summary>
+            <param name="info">Info object containing all the information needed to create the project.</param>
+        </member>
+        <member name="M:Connectiv.XrmBranch.GitLabManager.SetDevelopersCanPushAndMergeToMaster(Connectiv.XrmBranch.GeneralInfo)">
+            <summary>
+            Sets the developers can push/merge flags to true in the master branch of a Gitlab Project.
+            </summary>
+            <param name="info">Info object containing all the information needed to create the project.</param>
+        </member>
+        <member name="M:Connectiv.XrmBranch.GitLabManager.SetProjectMasters(Connectiv.XrmBranch.GitLabInfo)">
+            <summary>
+            Sets the <see cref="P:Connectiv.XrmBranch.GitLabInfo.UserName"/> and <see cref="P:Connectiv.XrmBranch.GitLabInfo.SecondGitlabMaster"/>, if set, as masters of the <see cref="P:Connectiv.XrmBranch.GitLabInfo.ProjectId"/>.
+            
+            Was once intended to set the user as owner, but the owner was then not allowed to push
+            to the protected master branch. May be a bug in the GitLab itself. To work around the
+            master access will be granted instead.
+            </summary>
+            <param name="info">Info object containing all the information needed to make the user the projects master.</param>
+        </member>
+        <member name="M:Connectiv.XrmBranch.GitLabManager.SetPostHookUrl(Connectiv.XrmBranch.GitLabInfo)">
+            <summary>
+            Sets the <see cref="P:Connectiv.XrmBranch.JenkinsManager.PostHookUrl"/> as web hook url to the GitLab project.
+            </summary>
+            <param name="info">Info object containing all the information needed to set the webhook.</param>
+        </member>
+        <member name="M:Connectiv.XrmBranch.GitLabManager.GetUsersGroups(Connectiv.XrmBranch.GitLabInfo,System.Boolean)">
+            <summary>
+            Requests all available groups/namespaces from the GitLab servers and adds them
+            to the <see cref="P:Connectiv.XrmBranch.GitLabManager.Groups"/> property. Maybe you want to clear the list before calling
+            this method, in case you want to refresh the list.
+            </summary>
+            <param name="info">Info object containing all the information needed to get the groups/namespaces.</param>
+            <param name="clearListBeforeAdding">Will clear the current list before adding the new result.</param>
+            <returns>List of all found groups/namespaces.</returns>
+        </member>
+        <member name="M:Connectiv.XrmBranch.GitLabManager.GetAllUserData(Connectiv.XrmBranch.GitLabInfo,System.Boolean)">
+            <summary>
+            Adds the first 500 users into <see cref="P:Connectiv.XrmBranch.GitLabManager.Users"/> property and also returns that list.
+            The list will _not_ be newly initialized. Maybe you want to clear the list before calling
+            this method, in case you want to refresh the list.
+            </summary>
+            <param name="info">Info object containing all the information needed to get users.</param>
+            <param name="clearListBeforeAdding">Will clear the current list before adding the new result.</param>
+            <returns>List of found users.</returns>
+        </member>
+        <member name="M:Connectiv.XrmBranch.GitLabManager.GetProjects(Connectiv.XrmBranch.GitLabInfo)">
+            <summary>
+            Gets a list of the first 1000 projects visible to the user owning the private token.
+            </summary>
+            <param name="info">Info object containing all the information needed to get the projects.</param>
+            <returns>The list of found projects.</returns>
+        </member>
+        <member name="M:Connectiv.XrmBranch.GitLabManager.GetBranches(Connectiv.XrmBranch.GitLabInfo)">
+            <summary>
+            Gets a list of all branches belonging to the <see cref="P:Connectiv.XrmBranch.GitLabInfo.ProjectId"/>.
+            </summary>
+            <param name="info">Info object containing all the information needed to get branches.</param>
+            <returns>List of found branches belonging to the specific project.</returns>
+        </member>
+        <member name="M:Connectiv.XrmBranch.GitLabManager.CreateBranch(Connectiv.XrmBranch.GitLabInfo,System.String,System.String)">
+            <summary>
+            Creates a new branch within the <see cref="P:Connectiv.XrmBranch.GitLabInfo.ProjectId"/> based on the <paramref name="parentBranchName"/>.
+            </summary>
+            <param name="info">Info object containing all the information needed to get a files content.</param>
+            <param name="newBranchName">Name of the new branchname.</param>
+            <param name="parentBranchName">Name of the branch that will be branched.</param>
+        </member>
+        <member name="M:Connectiv.XrmBranch.GitLabManager.GetFile(Connectiv.XrmBranch.GitLabInfo,System.String,System.String)">
+            <summary>
+            Returns the content of a file found on the GitLab.
+            </summary>
+            <param name="info">Info object containing all the information needed to get a files content.</param>
+            <param name="sourceName">Name of Branch, tag or commit to retrieve the file from.</param>
+            <param name="filePath">Path to the file within the GitLab repo.</param>
+            <returns>The returned file content.</returns>
+        </member>
+        <member name="M:Connectiv.XrmBranch.GitLabManager.PushFile(Connectiv.XrmBranch.GitLabInfo,System.String,System.String,System.String)">
+            <summary>
+            Creates a new file on the GitLab server within the <see cref="P:Connectiv.XrmBranch.GitLabInfo.ProjectId"/>.
+            </summary>
+            <param name="info">Info object containing all the information needed to push a file.</param>
+            <param name="filePath">Path followed by the name of the file within the workspace.</param>
+            <param name="branchName">Name of the branch where the file will be added to.</param>
+            <param name="newConfigString">Content of the file.</param>
+        </member>
+        <member name="M:Connectiv.XrmBranch.GitLabManager.ParseCreatedProjectJSon(System.String)">
+            <summary>
+            Parses the returned JSon response and returns the id of the created project.
+            </summary>
+            <param name="result">Plain JSon string.</param>
+            <returns>The parsed projectid.</returns>
+        </member>
+        <member name="M:Connectiv.XrmBranch.GitLabManager.ParseReponseJSon``1(System.String)">
+            <summary>
+            Parses the result of the returned JSon and creates new instances
+            of <typeparamref name="T"/> setting the JToken object in that instance.
+            </summary>
+            <typeparam name="T">Some kind of <see cref="T:Connectiv.XrmBranch.GitLabObject"/>.</typeparam>
+            <param name="result">JSon response to parse.</param>
+            <returns>Parsed list of <see cref="T:Connectiv.XrmBranch.GitLabObject"/> instances.</returns>
+        </member>
+        <member name="M:Connectiv.XrmBranch.GitLabManager.ParseFileJSon(System.String)">
+            <summary>
+            Parses the content tokent of the response to a UTF-8 string and
+            returns it. This is used as callback for request, that request
+            the content of whole files.
+            </summary>
+            <param name="result">JSon response to parse.</param>
+            <returns>The files content encoded in UTF-8.</returns>
+        </member>
+        <member name="T:Connectiv.XrmBranch.GitManager">
+            <summary>
+            Manager class providing methods to work with a local git repos.
+            </summary>
+        </member>
+        <member name="M:Connectiv.XrmBranch.GitManager.SolutionsAreDirty">
+            <summary>
+            Detects if the solutions folder within the repo root has not commited changes.
+            </summary>
+            <returns>True if something has not been commited yet, else false.</returns>
+        </member>
+        <member name="M:Connectiv.XrmBranch.GitManager.GetRepoRoot">
+            <summary>
+            Returns the full path to the repo root. Path contains forward slashes.
+            </summary>
+            <returns>Full path of repo root.</returns>
+        </member>
+        <member name="M:Connectiv.XrmBranch.GitManager.GetChangedFilesFromCommit(System.String)">
+            <summary>
+            Returns a list of every file that was part of the last commit. The name
+            is given relative to the git root.
+            </summary>
+            <param name="commit">Commit hash or HEAD</param>
+            <returns>Returns a list of every file that was part of the last commit</returns>
+        </member>
+        <member name="M:Connectiv.XrmBranch.GitManager.GetLastModifiedOn(System.String)">
+            <summary>
+            Searches the git log for the <paramref name="file"/> and takes the latest
+            entry. The creation date of this file will be returned.
+            </summary>
+            <param name="file">Filename to look for.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Connectiv.XrmBranch.GitManager.GetAllBranches">
+            <summary>
+            Returns a list of every branch from within the git repo.
+            </summary>
+            <returns>List of branches.</returns>
+        </member>
+        <member name="M:Connectiv.XrmBranch.GitManager.GetAllBranches(System.Boolean)">
+            <summary>
+            Returns a list of every branch from within the git repo.
+            </summary>
+            <returns>List of branches.</returns>
+        </member>
+        <member name="M:Connectiv.XrmBranch.GitManager.GetCurrentBranchName">
+            <summary>
+            Returns the name of the currently checked out branch.
+            </summary>
+            <returns>Name of the currently checked out branch.</returns>
+        </member>
+        <member name="M:Connectiv.XrmBranch.GitManager.Add(System.String)">
+            <summary>
+            Adds files to the git repo executing "git add <paramref name="arguments"/>" and returns the
+            exitcode of the git process.
+            </summary>
+            <param name="arguments">Will be passed as arguments to the git add.</param>
+            <returns>Exitcode of the git process.</returns>
+        </member>
+        <member name="M:Connectiv.XrmBranch.GitManager.Init">
+            <summary>
+            Initializes a new git repo in the working directory.
+            </summary>
+            <returns>Exitcode of the git process.</returns>
+        </member>
+        <member name="M:Connectiv.XrmBranch.GitManager.Commit(System.String)">
+            <summary>
+            Creates a new commit. You should provide the "-m " and the commit message 
+            as arguments to make a valid commit.
+            </summary>
+            <param name="arguments">Will be passed as arguments to the git commit.</param>
+            <returns>Exitcode of the git process.</returns>
+        </member>
+        <member name="M:Connectiv.XrmBranch.GitManager.Remote(System.String)">
+            <summary>
+            Executes git with the "remote" with the passed <paramref name="arguments"/>.
+            </summary>
+            <param name="arguments">i.e. "add origin 'http://gitlab/namespace/project.git'"</param>
+            <returns>Exitcode of the git process.</returns>
+        </member>
+        <member name="M:Connectiv.XrmBranch.GitManager.Push(System.String)">
+            <summary>
+            Pushes the latest commits (and other if configured in the <paramref name="arguments"/>) to
+            the remote.
+            <para>
+            Exceptions:
+                ArgumentException - Thrown if the exitcode of the git process equals 128. This is because git wont throw an exception on
+                                    its own, but never the less the execution was not successfull.
+            </para>
+            </summary>
+            <param name="arguments">Arguments for the push operation. May contain the remote name or options to also push tags.</param>
+            <returns>Exitcode of the git process.</returns>
+        </member>
+        <member name="M:Connectiv.XrmBranch.GitManager.ExecuteCommand(System.String,System.String)">
+            <summary>
+            Can be used to execute any git operation. Everything needs to be specified in the <paramref name="arguments"/>.
+            </summary>
+            <param name="arguments">Arguments that will be passed to git.</param>
+            <returns>Exitcode of the git process.</returns>
+        </member>
+        <member name="M:Connectiv.XrmBranch.GitManager.ExecuteCommand(System.String,System.Text.StringBuilder,System.String)">
+            <summary>
+            Can be used to execute any git operation. Everything needs to be specified in the <paramref name="arguments"/>.
+            </summary>
+            <param name="arguments">Arguments that will be passed to git.</param>
+            <param name="sb">Output from the process will be redirected into this instance and is available after executing this function.</param>
+            <returns>Exitcode of the git process.</returns>
+        </member>
+        <member name="M:Connectiv.XrmBranch.GitManager.ExecuteCommand(System.String,System.Text.StringBuilder,System.String,System.String)">
+            <summary>
+            Can be used to execute any git operation. Everything needs to be specified in the <paramref name="arguments"/>.
+            </summary>
+            <param name="arguments">Arguments that will be passed to git.</param>
+            <param name="sb">Output from the process will be redirected into this instance and is available after executing this function.</param>
+            <param name="pipeInput">This will be piped into the git inputstream.</param>
+            <returns>Exitcode of the git process.</returns>
+        </member>
+        <member name="M:Connectiv.XrmBranch.GitManager.ExecuteCommand(System.String,System.Text.StringBuilder,System.String,System.Boolean,System.String)">
+            <summary>
+            Can be used to execute any git operation. Everything needs to be specified in the <paramref name="arguments"/>.
+            </summary>
+            <param name="arguments">Arguments that will be passed to git.</param>
+            <param name="sb">Output from the process will be redirected into this instance and is available after executing this function.</param>
+            <param name="pipeInput">This will be piped into the git inputstream.</param>
+            <param name="redirectOutput">If true, will redirect the StandardInput- and StandardErrorStream, else Streams are not 
+                                         redirected and the <paramref name="sb"/> will not have any content.</param>
+            <returns>Exitcode of the git process.</returns>
+        </member>
+        <member name="T:Connectiv.XrmBranch.JenkinsManager">
+            <summary>
+            Manager class providing methods to work with a Jenkins server.
+            Class is mainly static and methods need a JenkinsInfo
+            object to work.
+            Jenkins API Documentation:
+            http://buildserver:8080/api/
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmBranch.JenkinsManager.BaseUrl">
+            <summary>
+            Gets the base url pointing to the jenkins server. Url has a trailing slash.
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmBranch.JenkinsManager.PostHookUrl">
+            <summary>
+            Gets the post hook url that triggers a build on the jenkins server.
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmBranch.JenkinsManager.JenkinsBuildTemplate">
+            <summary>
+            Gets the full path to the Build template file.
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmBranch.JenkinsManager.OpenCoverTemplate">
+            <summary>
+            Gets the full path to the opencover template file.
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmBranch.JenkinsManager.SolutionFinalizerExportTemplate">
+            <summary>
+            Gets the full path to the solutionfinalizer export template file.
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmBranch.JenkinsManager.SolutionFinalizerImportTemplate">
+            <summary>
+            Gets the full path to the solutionfinalizer import template file.
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmBranch.JenkinsManager.CopyToLatestBuildTemplate">
+            <summary>
+            Gets the full path to the template file containing the build step copying to latest build folder.
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmBranch.JenkinsManager.SingleCopyToLatestBuildTemplate">
+            <summary>
+            Gets the full path to the template file containing the build step copying single projects to latest build folder.
+            Will be used once per project within the <see cref="P:Connectiv.XrmBranch.JenkinsManager.CopyToLatestBuildTemplate"/>.
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmBranch.JenkinsManager.DoxyGenBuildTemplate">
+            <summary>
+            Gets the full path to the template file containing the build step generating doxygen documentation.
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmBranch.JenkinsManager.DoxyGenPublisherBuildTemplate">
+            <summary>
+            Gets the full path to the template file containing the build step publishing the generated doxygen documentation.
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmBranch.JenkinsManager.NuspecBuildTemplate">
+            <summary>
+            Gets the full path to the template file containing the build step creating a nugpk file.
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmBranch.JenkinsManager.NuspecFullReleaseBuildTemplate">
+            <summary>
+            Gets the full path to the template file containing the build steps to get the nuget release process.
+            </summary>
+        </member>
+        <member name="M:Connectiv.XrmBranch.JenkinsManager.CreateProject(Connectiv.XrmBranch.GeneralInfo)">
+            <summary>
+            Creates a new build within the jenkins having all the buildsteps configured.
+            </summary>
+            <param name="info">Info instance providing all the needed information to create a new jenkins build.</param>
+        </member>
+        <member name="M:Connectiv.XrmBranch.JenkinsManager.CreateNuGetReleaseProject(Connectiv.XrmBranch.GeneralInfo)">
+            <summary>
+            Creates a new build within the jenkins having all buildsteps needed to create
+            a new release nuget package. The buildname will be "<paramref name="info.ProjectName.ProjectName"/>-Release".
+            </summary>
+            <param name="info">Info instance providing all the needed information to create a new jenkins build.</param>
+        </member>
+        <member name="M:Connectiv.XrmBranch.JenkinsManager.GetCrumb">
+            <summary>
+            http://buildserver/crumbIssuer/api/xml
+            Add this as HTTP Header when CSRF is enabled ".Crumb: ec99bdd1748f328dc3b331d4994bbde6"
+            </summary>
+            <returns>A valid crumb value provided by jenkins.</returns>
+        </member>
+        <member name="M:Connectiv.XrmBranch.JenkinsManager.ParseCrumbJSon(System.String)">
+            <summary>
+            Parses the JSon response and returns the given crumb value.
+            </summary>
+            <param name="result">Returned plain JSon.</param>
+            <returns>The crum value.</returns>
+        </member>
+        <member name="M:Connectiv.XrmBranch.JenkinsManager.GetConfigTemplate(Connectiv.XrmBranch.GeneralInfo)">
+            <summary>
+            Creates the complete jenkins build in xml.
+            </summary>
+            <param name="info">Info instance providing all the needed information. Buildsteps depend on the configured values.</param>
+            <returns>A complete and valid xml representing the build.</returns>
+        </member>
+        <member name="M:Connectiv.XrmBranch.JenkinsManager.GetNuspecBuildArgs(Connectiv.XrmBranch.GeneralInfo)">
+            <summary>
+            Gets the xml representing a valid buildstep that creates
+            a nuget package based on a nuscep file or an empty string
+            if <see cref="P:Connectiv.XrmBranch.JenkinsInfo.ProjectHasNuGet"/> is false.
+            </summary>
+            <param name="info">Info object containing all the information needed to decided and create the buildstep.</param>
+            <returns>Buildstep in xml, or an empty string.</returns>
+        </member>
+        <member name="M:Connectiv.XrmBranch.JenkinsManager.GetDoxyGenPublisherConfig(Connectiv.XrmBranch.GeneralInfo)">
+            <summary>
+            Gets the xml representing a valid buildstep that publishs
+            a generated doxygen documentation or an empty string
+            if <see cref="P:Connectiv.XrmBranch.GeneralInfo.CreateDoxyGenDocumenation"/> is false.
+            </summary>
+            <param name="info">Info object containing all the information needed to decided and create the publish buildstep.</param>
+            <returns>Publish buildstep in xml, or an empty string.</returns>
+        </member>
+        <member name="M:Connectiv.XrmBranch.JenkinsManager.GetDoxyGenArgs(Connectiv.XrmBranch.GeneralInfo)">
+            <summary>
+            Gets the xml representing a valid buildstep that creates
+            a doxygen documentation or an empty string
+            if <see cref="P:Connectiv.XrmBranch.GeneralInfo.CreateDoxyGenDocumenation"/> is false.
+            </summary>
+            <param name="info">Info object containing all the information needed to decided and create the buildstep.</param>
+            <returns>Buildstep in xml, or an empty string.</returns>
+        </member>
+        <member name="M:Connectiv.XrmBranch.JenkinsManager.GetCopyToLatestBuildArgs(Connectiv.XrmBranch.GeneralInfo)">
+            <summary>
+            Gets the xml representing a valid buildstep that copies the every projects output to the latest build folder
+            or an empty string if <see cref="P:Connectiv.XrmBranch.VsSolutionInfo.Projects"/> does not have any items.
+            </summary>
+            <param name="info">Info object containing all the information needed to decided and create the buildstep.</param>
+            <returns>Buildstep in xml, or an empty string.</returns>
+        </member>
+        <member name="M:Connectiv.XrmBranch.JenkinsManager.GetOpenCoverTemplate(System.String,System.Collections.Generic.List{Connectiv.XrmBranch.VsProjectInfo})">
+            <summary>
+            Gets the xml representing a valid buildstep that executes opencover on unit tests
+            or an empty string if <paramref name="vsProjects"/> does not have any test projects configured.
+            </summary>
+            <param name="projectName">Name of the whole project. Not the Visual Studio projects.</param>
+            <param name="vsProjects">List of all visual studio projects that should be considered for open cover.</param>
+            <returns>Buildstep in xml, or an empty string.</returns>
+        </member>
+        <member name="M:Connectiv.XrmBranch.JenkinsManager.GetFxCopArgs(System.String,System.Collections.Generic.List{Connectiv.XrmBranch.VsProjectInfo})">
+            <summary>
+            Gets the xml representing a valid buildstep that executes FxCop
+            or an empty string if <paramref name="vsProjects"/> does not have any test projects configured.
+            </summary>
+            <param name="projectName">Name of the whole project. Not the Visual Studio projects.</param>
+            <param name="vsProjects">List of all visual studio projects that should be considered for FxCop.</param>
+            <returns>Buildstep in xml, or an empty string.</returns>
+        </member>
+        <member name="M:Connectiv.XrmBranch.JenkinsManager.GetSolutionFinalizerArgs(Connectiv.XrmBranch.GeneralInfo)">
+            <summary>
+            Gets the xml representing a valid buildstep that executes the solutionfinalizer (ex- and import)
+            or an empty string if <see cref="P:Connectiv.XrmBranch.OrganizationConfigInfo.CreateDevOrg"/> or <see cref="P:Connectiv.XrmBranch.OrganizationConfigInfo.AddCrmSolutionToDev"/> is false.
+            </summary>
+            <param name="info">Info object containing all the information needed to decided and create the buildstep.</param>
+            <returns>Buildstep in xml, or an empty string.</returns>
+        </member>
+        <member name="T:Connectiv.XrmBranch.LocalConfigManager">
+            <summary>
+            Manager class providing methods to work with a local local config files.
+            Class is mainly static and methods need a JenkinsInfo
+            object to work.
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmBranch.LocalConfigManager.BuildConfigFolder">
+            <summary>
+            Gets the foldername containing all the configs for the build within the repo.
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmBranch.LocalConfigManager.ReadMeFileName">
+            <summary>
+            Gets the name of the ReadMe.
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmBranch.LocalConfigManager.GitIgnoreFileName">
+            <summary>
+            Gets the name of the gitignore.
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmBranch.LocalConfigManager.ChangelogFileName">
+            <summary>
+            Gets the name of the gitignore.
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmBranch.LocalConfigManager.ReplacementsFileName">
+            <summary>
+            Gets the name of the replacements.xml.
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmBranch.LocalConfigManager.ConfigMasterFileName">
+            <summary>
+            Gets the name of the mscrmtool2011 config file.
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmBranch.LocalConfigManager.NuspecFileName">
+            <summary>
+            Gets the name of the nuget config nuspec.
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmBranch.LocalConfigManager.NuGetExeFileName">
+            <summary>
+            Gets the name of the nuget executable.
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmBranch.LocalConfigManager.DoxyGenConfigFileName">
+            <summary>
+            Gets the name of the doxygen config file.
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmBranch.LocalConfigManager.ObfuscateConfigFileName">
+            <summary>
+            Gets the name of the obfuscation config file.
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmBranch.LocalConfigManager.InitScriptFileName">
+            <summary>
+            Gets the name of the init script used to init the git hooks.
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmBranch.LocalConfigManager.KeyPairFileName">
+            <summary>
+            Gets the name of the keypair signature file.
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmBranch.LocalConfigManager.EditorConfigFileName">
+            <summary>
+            Gets the name of the editorconfig file.
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmBranch.LocalConfigManager.EsLintFileName">
+            <summary>
+            Gets the name of the eslint file.
+            </summary>
+        </member>
+        <member name="F:Connectiv.XrmBranch.LocalConfigManager.configWorking">
+            <summary>
+            Root Directory having a folder named <see cref="F:Connectiv.XrmBranch.LocalConfigManager.configTemplatesFolder"/>.
+            </summary>
+        </member>
+        <member name="F:Connectiv.XrmBranch.LocalConfigManager.configTemplatesFolder">
+            <summary>
+            Folder path containing all the template files used to create
+            instances for one specific project.
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmBranch.LocalConfigManager.ConfigTemplatesFolder">
+            <summary>
+            Gets or sets the folder having a folder containing the folder named <see cref="F:Connectiv.XrmBranch.LocalConfigManager.configTemplatesFolder"/>
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmBranch.LocalConfigManager.GitIgnoreTemplateFile">
+            <summary>
+            Gets the path of the template file for the gitignore.
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmBranch.LocalConfigManager.ConfigMasterTemplateFile">
+            <summary>
+            Gets the path of the template file for the connections config.
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmBranch.LocalConfigManager.SingleConnectionDetailTemplateFile">
+            <summary>
+            Gets the path of the template file for a single connectiondetail part within the connections config.
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmBranch.LocalConfigManager.ReplacementsTemplateXmlFile">
+            <summary>
+            Gets the path of the template file for the replacements file.
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmBranch.LocalConfigManager.NuspecTemplateXmlFile">
+            <summary>
+            Gets the path of the template file for the nuspec file.
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmBranch.LocalConfigManager.NuGetExeTemplateFile">
+            <summary>
+            Gets the path of the nuget executable for copying.
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmBranch.LocalConfigManager.ReadMeTemplateFile">
+            <summary>
+            Gets the path of the template file for the ReadMe file.
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmBranch.LocalConfigManager.DoxyGenTemplateFile">
+            <summary>
+            Gets the path of the template file for the doxygen config file.
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmBranch.LocalConfigManager.ObfuscateTemplateFile">
+            <summary>
+            Gets the path of the template file for the obfuscate config file.
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmBranch.LocalConfigManager.SingleObfuscateTemplateFile">
+            <summary>
+            Gets the path of the template file for a single project reference within the obfuscate config.
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmBranch.LocalConfigManager.InitScriptTemplateFile">
+            <summary>
+            Gets the path of the template file for the init script that installs git hooks.
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmBranch.LocalConfigManager.KeyPairTemplateFile">
+            <summary>
+            Gets the path of the keypair.snk for copying.
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmBranch.LocalConfigManager.EditorConfigTemplateFile">
+            <summary>
+            Gets the path of the editorconfig for copying.
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmBranch.LocalConfigManager.EsLintTemplateFile">
+            <summary>
+            Gets the path of the eslintrc.json for copying.
+            </summary>
+        </member>
+        <member name="M:Connectiv.XrmBranch.LocalConfigManager.CreateNewConnectionsFile(Connectiv.XrmCommon.ConnectionDetail,System.String,System.String)">
+            <summary>
+            Creates a new connectionfile named <paramref name="newFileName"/> and having only one connection.
+            The connection points to the same server as the template, but the name is changed
+            After executing this function the <see cref="!:ConnectionManager.ConfigurationFile"/> is pointing
+            to the <paramref name="newFileName"/>.
+            </summary>
+            <param name="detailTemplate">Will be used as template. Values having a organization name in it will be changed.</param>
+            <param name="newFileName">Name of the file that will be saved.</param>
+            <param name="newOrganizationName">Organization name that will be used within the connectiondetail.</param>
+        </member>
+        <member name="M:Connectiv.XrmBranch.LocalConfigManager.CopyConfigFile(System.String)">
+            <summary>
+            Copies the current connection list to the path specified.
+            After executing this function the <see cref="!:ConnectionManager.ConfigurationFile"/> is pointing
+            to the <paramref name="newFilePath"/>.
+            </summary>
+            <param name="newFilePath">Path including the filename which will be created.</param>
+        </member>
+        <member name="M:Connectiv.XrmBranch.LocalConfigManager.AddToConnectionsFile(System.String,Connectiv.XrmCommon.ConnectionDetail,System.Boolean)">
+            <summary>
+            Adds a new connection to the currect connection list. List can be cleared before
+            adding the new connection, so the list will only contain one item then.
+            </summary>
+            <param name="newOrganizationName">Will be set as organization name within the connections.</param>
+            <param name="connectionDetail">Used as template. Organization name will be changed to <paramref name="newOrganizationName"/></param>
+            <param name="emptyListBeforeAdd">If true, empties the current list before adding the new connection, else just adds the new connection.</param>
+            <returns>A cloned instance of the passed in <paramref name="connectionDetail"/> having the organizationname changed.</returns>
+        </member>
+        <member name="M:Connectiv.XrmBranch.LocalConfigManager.CreateDirectory(System.String)">
+            <summary>
+            Creates a new folder if not already existant.
+            </summary>
+            <param name="fullPath">Path to the folder.</param>
+            <returns>DirectoryInfo instance to the path.</returns>
+        </member>
+        <member name="M:Connectiv.XrmBranch.LocalConfigManager.CreateReadMeFile(Connectiv.XrmBranch.GeneralInfo)">
+            <summary>
+            Creates a new ReadMe.md file at the root of the current working dir.
+            Uses the <see cref="P:Connectiv.XrmBranch.LocalConfigManager.ReadMeTemplateFile"/> as template, replacing
+            the placeholer with the projectname.
+            </summary>
+            <param name="info">Info object containing all the information needed create the file.</param>
+            <returns>FileInfo instance pointing to the created ReadMe.md file.</returns>
+        </member>
+        <member name="M:Connectiv.XrmBranch.LocalConfigManager.CreateNugetExe(Connectiv.XrmBranch.GeneralInfo)">
+            <summary>
+            Copies the nuget executable to the .buildconfig\nuget folder within the working dir.
+            Existing file will be overwritten.
+            </summary>
+            <param name="info">Info object containing all the information needed to create the file.</param>
+            <returns>FileInfo instance pointing to the copied nuget exe.</returns>
+        </member>
+        <member name="M:Connectiv.XrmBranch.LocalConfigManager.CreateMscrmToolsMasterFile(Connectiv.XrmBranch.GeneralInfo,Connectiv.XrmCommon.ConnectionDetail[])">
+            <summary>
+            Creates the connections.config file having all the <paramref name="details"/> within the
+            .buildconfig\connections folder.
+            </summary>
+            <param name="info">Info object containing all the information needed to create the file.</param>
+            <param name="details">List of connectiondetails that will be added to the new config file.</param>
+            <returns>FileInfo instance pointing to the created config file.</returns>
+        </member>
+        <member name="M:Connectiv.XrmBranch.LocalConfigManager.CreateReplacementsFile(Connectiv.XrmBranch.GeneralInfo,System.String)">
+            <summary>
+            Creates an empty replacements.xml file containing only basic common configurations.
+            References need to be created manually as the Crm-Guid is important.
+            </summary>
+            <param name="info">Info object containing all the information needed to create the file.</param>
+            <param name="connectionName">Will be set as the connectionname within the file.</param>
+            <returns>FileInfo instance pointing to the newly created file.</returns>
+        </member>
+        <member name="M:Connectiv.XrmBranch.LocalConfigManager.CreateDefaultIgnore(Connectiv.XrmBranch.GeneralInfo)">
+            <summary>
+            Copies the gitignore template file to the repo root. Existing files will be overwritten.
+            </summary>
+            <param name="info">Info object containing all the information needed to create the file.</param>
+            <returns>FileInfo instance pointing to the newly created file.</returns>
+        </member>
+        <member name="M:Connectiv.XrmBranch.LocalConfigManager.CreateChangelogFile(Connectiv.XrmBranch.GeneralInfo)">
+            <summary>
+            Creates a new empty file named as specified in <see cref="P:Connectiv.XrmBranch.LocalConfigManager.ChangelogFileName"/> within the repo root.
+            </summary>
+            <param name="info">Info object containing all the information needed to create the file.</param>
+            <returns>FileInfo instance pointing to the newly created file.</returns>
+        </member>
+        <member name="M:Connectiv.XrmBranch.LocalConfigManager.CreateInitScript(Connectiv.XrmBranch.GeneralInfo)">
+            <summary>
+            Copies the init.ps1 script file which help initializing the git hooks to the repo root. Existing files will be overwritten.
+            </summary>
+            <param name="info">Info object containing all the information needed to create the file.</param>
+            <returns>FileInfo instance pointing to the newly created file.</returns>
+        </member>
+        <member name="M:Connectiv.XrmBranch.LocalConfigManager.CreateKeyPairSnk(Connectiv.XrmBranch.GeneralInfo)">
+            <summary>
+            Copies the keypair.snk file to the repo root. Existing files will be overwritten.
+            </summary>
+            <param name="info">Info object containing all the information needed to create the file.</param>
+            <returns>FileInfo instance pointing to the newly created file.</returns>
+        </member>
+        <member name="M:Connectiv.XrmBranch.LocalConfigManager.CreateNuspecFile(Connectiv.XrmBranch.GeneralInfo)">
+            <summary>
+            Creates a nuspec file from the template into the .buildconfig\nuget folder. Can be used to
+            create a nuget package. References to the files you want to include need to be added manually.
+            </summary>
+            <param name="info">Info object containing all the information needed to create the file.</param>
+            <returns>FileInfo instance pointing to the newly created file.</returns>
+        </member>
+        <member name="M:Connectiv.XrmBranch.LocalConfigManager.CreateDoxygenConfigFile(Connectiv.XrmBranch.GeneralInfo)">
+            <summary>
+            Creates a doxygen config file from the template into the .buildconfig\doxygen folder. Can be used to
+            create a doxygen documentation.
+            </summary>        
+            <param name="info">Info object containing all the information needed to create the file.</param>
+            <returns>FileInfo instance pointing to the newly created file.</returns>
+        </member>
+        <member name="M:Connectiv.XrmBranch.LocalConfigManager.CreateObfuscateConfigFile(Connectiv.XrmBranch.GeneralInfo)">
+            <summary>
+            Creates an obfuscate config file from the template into the .buildconfig\obfuscate folder. Can be used to
+            create an obfuscated managed code files. Basic protection rules are already enabled and should only
+            be changed with a good reason. All configured projects (excluding testprojects) will be added to the
+            configuration file.
+            </summary>
+            <param name="info">Info object containing all the information needed to create the file.</param>
+            <returns>FileInfo instance pointing to the newly created file.</returns>
+        </member>
+        <member name="M:Connectiv.XrmBranch.LocalConfigManager.CreateDefaultEditorConfig(Connectiv.XrmBranch.GeneralInfo)">
+            <summary>
+            Copies the editorconfig template file to the repo root. Existing files will be overwritten.
+            </summary>
+            <param name="info">Info object containing all the information needed to create the file.</param>
+            <returns>FileInfo instance pointing to the newly created file.</returns>
+        </member>
+        <member name="M:Connectiv.XrmBranch.LocalConfigManager.CreateDefaultEsLint(Connectiv.XrmBranch.GeneralInfo)">
+            <summary>
+            Copies the eslintrc.json template file to the repo root. Existing files will be overwritten.
+            </summary>
+            <param name="info">Info object containing all the information needed to create the file.</param>
+            <returns>FileInfo instance pointing to the newly created file.</returns>
+        </member>
+        <member name="T:Connectiv.XrmBranch.OrganizationManager">
+            <summary>
+            Manager class that contains a bunch of static functions of which most work with the DeploymentService.
+            </summary>
+        </member>
+        <member name="F:Connectiv.XrmBranch.OrganizationManager.SqlConnectionTimeout">
+            <summary>
+            SQL connection timout in seconds.
+            </summary>
+        </member>
+        <member name="M:Connectiv.XrmBranch.OrganizationManager.CopyOrganization(System.String,Connectiv.XrmCommon.ConnectionDetail,System.String)">
+            <summary>
+            Copies an existing CRM organization.
+            </summary>
+            <exception cref="T:System.ArgumentException">If an organization with the specified <paramref name="newOrganizationName"/> exists already. Names will be checked cas insensitive!
+            If a database exists with the same name, no exception will be thrown, instead the databse will be deleted and recreated. 
+            This should be ok, as the database does not have a corresponding crm organization.</exception>
+            <param name="newOrganizationName">Name of the new organization. Will also be used as the database name and is therefor limited to 30 characters. More than 30 characters will automatically be trunk by the SQL server. There will be no exception.</param>
+            <param name="connectionDetail">Contains the information of the source organization that will be copied.</param>
+            <param name="databaseName">Optional argument that should be provided if the source database name does not equal the source organization name.</param>
+            <returns>A new instance of connectiondetails containing the connection information of the created organization.</returns>
+        </member>
+        <member name="M:Connectiv.XrmBranch.OrganizationManager.DeleteOrganization(Connectiv.XrmCommon.ConnectionDetail,System.String)">
+            <summary>
+            Deletes a CRM organization including it's database. 
+            Before an organization will be deleted the organization will be disabled.
+            If there is no organization to delete, the database will be queried anyway and
+            deleted if it exists. This is to make sure that there is absolutly nothing 
+            left having the specified names.
+            </summary>
+            <param name="connectionDetail">Contains the information of the source organization that will be deleted.</param>
+            <param name="databaseName">Database name that should be deleted.</param>
+        </member>
+        <member name="M:Connectiv.XrmBranch.OrganizationManager.CreateCrmSolution(System.String,Connectiv.XrmCommon.ConnectionDetail)">
+            <summary>
+            Creates a new crm solution having the provided <paramref name="solutionName"/>.
+            The publisher of the solution will be connectiv.
+            </summary>
+            <exception cref="T:System.ArgumentException">If not exactly one publisher exists having a con prefix</exception>
+            <param name="solutionName">Name of the solution.</param>
+            <param name="templateDetails">Connection details pointing to the crm organization where the solution shall be created.</param>
+            <returns>The id of the created solution.</returns>
+        </member>
+        <member name="M:Connectiv.XrmBranch.OrganizationManager.ExportSolution(Microsoft.Xrm.Sdk.IOrganizationService,System.String,System.Boolean)">
+            <summary>
+            Exports the crm solution file and returns it as a byte[]. The downloaded content
+            is not saved persistently yet.
+            </summary>
+            <param name="service">Connection to the crm where the solution should be exportet from.</param>
+            <param name="solutionName">Name of the solution to export.</param>
+            <param name="managed">Determines whether to export the solution managed or unmanaged.</param>
+            <returns>byte[] of the exportet solution.</returns>
+        </member>
+        <member name="M:Connectiv.XrmBranch.OrganizationManager.ExportSolution(Microsoft.Xrm.Sdk.IOrganizationService,System.String,System.Boolean,System.String)">
+            <summary>
+            Exports the crm solution file and returns it as a byte[]. The downloaded content
+            is not saved persistently yet.
+            </summary>
+            <param name="service">Connection to the crm where the solution should be exportet from.</param>
+            <param name="solutionName">Name of the solution to export.</param>
+            <param name="managed">Determines whether to export the solution managed or unmanaged.</param>
+            <param name="targetVersion">Leave null or empty if no special version is needed. Else pass in the value of the version the solution shall support on import.</param>
+            <returns>byte[] of the exportet solution.</returns>
+        </member>
+        <member name="M:Connectiv.XrmBranch.OrganizationManager.ImportSolution(Microsoft.Xrm.Sdk.IOrganizationService,System.Byte[],System.Boolean,System.Int32,System.Boolean,System.Boolean)">
+            <summary>
+            Imports the <paramref name="solutionBytes"/> into the CRM. After a successfull import
+            the crm will also activate every workflow process.
+            </summary>
+            <exception cref="T:System.TimeoutException">Async import will wait a maximum time of 10 minutes before throwing.</exception>
+            <exception cref="T:Connectiv.XrmBranch.ImportSolutionException">If the async statuscode is indicating an error.</exception>
+            <param name="serviceProxy">Connection to the crm organization where the solution shall be imported.</param>
+            <param name="solutionBytes">Solution as byte[] which will be imported.</param>
+            <param name="asyncImport">Determines whether to do a async import or not. Async is only supported in CRM 13 or higher.</param>
+            <param name="waitTimeout">Timeout in minutes to wait for the solution import job to complete. Only applicable for async import.</param>
+            <param name="failOnTimeout">If true fails throws an exception if solution import job did not complete within given <paramref name="waitTimeout"/>. Only applicable for async import.</param>
+        </member>
+        <member name="M:Connectiv.XrmBranch.OrganizationManager.ImportSolution(Microsoft.Xrm.Sdk.IOrganizationService,System.String,System.Boolean,System.Boolean)">
+            <summary>
+            Imports the solution located at <paramref name="solutionPath"/> into the CRM. After a successfull import
+            the crm will also activate every workflow process.
+            </summary>
+            <exception cref="T:System.TimeoutException">Async import will wait a maximum time of 10 minutes before throwing.</exception>
+            <exception cref="T:Connectiv.XrmBranch.ImportSolutionException">If the async statuscode is indicating an error.</exception>
+            <param name="serviceProxy">Connection to the crm organization where the solution shall be imported.</param>
+            <param name="solutionPath">Path to the solution including the solutions name.</param>
+            <param name="asyncImport">Determines whether to do a async import or not. Async is only supported in CRM 13 or higher.</param>
+        </member>
+        <member name="M:Connectiv.XrmBranch.OrganizationManager.AsyncImport(Microsoft.Xrm.Sdk.IOrganizationService,System.Byte[],System.Int32,System.Boolean)">
+            <summary>
+            Executes and manages the async import process of the solution.
+            Waits a maximum timeout of 10 Minutes before stopping the process. The import 
+            itself my continue in the background even after a timeout.
+            </summary>
+            <exception cref="T:System.TimeoutException">Async import will wait a maximum time of 10 minutes before throwing.</exception>
+            <exception cref="T:Connectiv.XrmBranch.ImportSolutionException">If the async statuscode is indicating an error.</exception>
+            <param name="connection">Connection to the crm organization where the solution shall be imported.</param>
+            <param name="solutionBytes">Solution as byte[] which will be imported.</param>
+            <param name="waitTimeout">Timeout in minutes to wait for the solution import job to complete. Only applicable for async import.</param>
+            <param name="failOnTimeout">If true fails throws an exception if solution import job did not complete within given <paramref name="waitTimeout"/>. Only applicable for async import.</param>
+        </member>
+        <member name="M:Connectiv.XrmBranch.OrganizationManager.StartAsyncImport(Microsoft.Xrm.Sdk.IOrganizationService,System.Byte[])">
+            <summary>
+            Starts the initial import solution process. Also sets the flag to activate every process
+            after a successfull import.
+            </summary>
+            <param name="connection">Connection to the crm organization where the solution shall be imported.</param>
+            <param name="solutionBytes">Solution as byte[] which will be imported.</param>
+            <returns>Id of the async job that can be used to query current status.</returns>
+        </member>
+        <member name="M:Connectiv.XrmBranch.OrganizationManager.IsImportSucceeded(Microsoft.Xrm.Sdk.Entity)">
+            <summary>
+            Checks the status of the passed <paramref name="asyncOperation"/> and returns
+            true if it indicates a successfull import. In any other case false.
+            </summary>
+            <exception cref="T:Connectiv.XrmBranch.ImportSolutionException">If the async statuscode is indicating an error or can not be obtained.</exception>
+            <param name="asyncOperation">Record that should contain a statuscode to analyze.</param>
+            <returns>Returns true if it indicates a successfull import. Else false.</returns>
+        </member>
+        <member name="M:Connectiv.XrmBranch.OrganizationManager.RetrieveAsyncJobStatus(Microsoft.Xrm.Sdk.IOrganizationService,System.Guid)">
+            <summary>
+            Returns the record of entity asyncoperation having that <paramref name="asyncJobId"/>.
+            Will retry 5 times in case of an error.
+            </summary>
+            <param name="service">Connection to the crm organization.</param>
+            <param name="asyncJobId">ID of the asyncoperation record to be retrieved.</param>
+            <returns>The record having the passed in id. Record will contain a message and a statuscode attribute.</returns>
+        </member>
+        <member name="M:Connectiv.XrmBranch.OrganizationManager.SyncImport(Microsoft.Xrm.Sdk.IOrganizationService,System.Byte[])">
+            <summary>
+            Executes the synchron import of the CRM solution.
+            TODO: Remove when CRM 2011 is not supported anymore.
+            </summary>
+            <param name="service">Connection to the crm organization.</param>
+            <param name="solutionBytes">Solution as byte[] which will be imported.</param>
+        </member>
+        <member name="M:Connectiv.XrmBranch.OrganizationManager.CreateDeploymentService(Connectiv.XrmCommon.ConnectionDetail)">
+            <summary>
+            Creates the deployment service. Use this to talk about setting organization metadata,
+            copying organizations,...
+            This service does not point to a single crm organization, but to the whole application server.
+            <para>
+            Connection timeout is set to 20 minutes. This is to ensure that there is enough time to
+            finish time consuming responses. Second thing: This may not be the only place to define the connection
+            timeout. Also check server side timeouts.
+            </para>
+            </summary>
+            <param name="connectionDetail">Used to create the service and to provide credentials.</param>
+            <returns>A new instance of the deployment service.</returns>
+        </member>
+        <member name="M:Connectiv.XrmBranch.OrganizationManager.GetAllOrganizations(Microsoft.Xrm.Sdk.Deployment.DeploymentServiceClient)">
+            <summary>
+            Returns all crm organizations found on the crm server.
+            </summary>
+            <param name="serviceClient">Connection instance to the crm application server.</param>
+            <returns>Complete response received from the crm containing all found crm organizations.</returns>
+        </member>
+        <member name="M:Connectiv.XrmBranch.OrganizationManager.DataBaseExists(System.String,System.String)">
+            <summary>
+            Checks if a database with the name passed in <paramref name="dataBaseNameToCheck"/> exists on the
+            <paramref name="serverIpOrName"/>. Names will be checked cas insensitive!
+            </summary>
+            <param name="dataBaseNameToCheck">Name of the data base to check. Names will be checked cas insensitive!</param>
+            <param name="serverIpOrName">Ip or Name of the server to check the name on.</param>
+            <returns>True if database exists, else false.</returns>
+        </member>
+        <member name="M:Connectiv.XrmBranch.OrganizationManager.ImportOrganization(System.String,System.String,Microsoft.Xrm.Sdk.Deployment.DeploymentServiceClient)">
+            <summary>
+            Starts an asynchron import process of an organization and waits for it to finish for a maximum of 10 minutes.
+            Will log a warning if the final operation status is processing to indicate the user that there is still something running.
+            </summary>
+            <exception cref="T:Connectiv.XrmBranch.OrganizationImportException">When the final operation status is not completed or processing.</exception>
+            <param name="organizationName">Target organizationName without _MSCRM suffix. </param>
+            <param name="serverIpOrName">Plain ip or hostname of the sql server.</param>
+            <param name="serviceClient">Deploymentservice instance that will be used to talk with the crm deployement instance.</param>
+        </member>
+        <member name="M:Connectiv.XrmBranch.OrganizationManager.StartAsyncOrganizationImport(System.String,System.String,Microsoft.Xrm.Sdk.Deployment.DeploymentServiceClient)">
+            <summary>
+            Starts the asynchronous organization import.
+            </summary>
+            <param name="organizationName">Target organizationName without _MSCRM suffix. </param>
+            <param name="serverIpOrName">Plain ip or hostname of the sql server.</param>
+            <param name="serviceClient">Deploymentservice instance that will be used to talk with the crm deployement instance.</param>
+            <returns>the operationid that can be used to fetch the current progress.</returns>
+        </member>
+        <member name="M:Connectiv.XrmBranch.OrganizationManager.AddCrmDataBase(System.String,System.String,System.String,Microsoft.Xrm.Sdk.Deployment.DeploymentServiceClient)">
+            <summary>
+            Restores a backup file and renames its mdf and ldf file to match the new organization name.
+            </summary>
+            <param name="targetBackupFileName">Backup filename without the .bak extension</param>
+            <param name="targetOrganizationName">Organizationname without the _MSCRM suffix</param>
+            <param name="serverIpOrName">Plain ip or hostname of the sql server.</param>
+            <param name="serviceClient">Deploymentservice instance that will be used to talk with the crm deployement instance.</param>
+        </member>
+        <member name="M:Connectiv.XrmBranch.OrganizationManager.DeleteDatabase(System.String,System.String)">
+            <summary>
+            Deletes a SQL database.
+            </summary>
+            <param name="databaseName">Name of the database to delete, without _MSCRM suffix.</param>
+            <param name="serverIpOrName">Plain ip or hostname of the sql server.</param>
+        </member>
+        <member name="M:Connectiv.XrmBranch.OrganizationManager.DeleteOrganizationInstance(System.String,Microsoft.Xrm.Sdk.Deployment.DeploymentServiceClient)">
+            <summary>
+            Deletes a Crm organization.
+            </summary>
+            <param name="organizationName">Name of the organization that shall be deleted.</param>
+            <param name="serviceClient">Deploymentservice instance that will be used to talk with the crm deployement instance.</param>
+        </member>
+        <member name="M:Connectiv.XrmBranch.OrganizationManager.ActivateOrganization(Connectiv.XrmCommon.ConnectionDetail)">
+            <summary>
+            Activates an organization.
+            </summary>
+            <param name="conDetails">Details used to create the deployementservice and holds the organization to activate.</param>
+        </member>
+        <member name="M:Connectiv.XrmBranch.OrganizationManager.ActivateOrganization(System.String,Microsoft.Xrm.Sdk.Deployment.DeploymentServiceClient)">
+            <summary>
+            Activates an organization.
+            </summary>
+            <param name="organizationName">The name of the organization to activate.</param>
+            <param name="serviceClient">Deploymentservice instance that will be used to talk with the crm deployement instance.</param>
+        </member>
+        <member name="M:Connectiv.XrmBranch.OrganizationManager.DisableOrganization(Connectiv.XrmCommon.ConnectionDetail)">
+            <summary>
+            Deactivates an organization.
+            </summary>
+            <param name="conDetails">Details used to create the deployementservice and holds the organization to deactivate.</param>
+        </member>
+        <member name="M:Connectiv.XrmBranch.OrganizationManager.DisableOrganization(System.String,Microsoft.Xrm.Sdk.Deployment.DeploymentServiceClient)">
+            <summary>
+            Deactivates an organization.
+            </summary>
+            <param name="organizationName">The name of the organization to deactivate.</param>
+            <param name="serviceClient">Deploymentservice instance that will be used to talk with the crm deployement instance.</param>
+        </member>
+        <member name="M:Connectiv.XrmBranch.OrganizationManager.SetOrganizationState(System.String,Microsoft.Xrm.Sdk.Deployment.DeploymentServiceClient,Microsoft.Xrm.Sdk.Deployment.OrganizationState)">
+            <summary>
+            Sets the organization state to the passed in value.
+            </summary>
+            <param name="organizationName">The name of the organization to set the state for.</param>
+            <param name="serviceClient">Deploymentservice instance that will be used to talk with the crm deployement instance.</param>
+            <param name="stateToSet">The state that will be set for the organization.</param>
+        </member>
+        <member name="M:Connectiv.XrmBranch.OrganizationManager.CreateBackup(System.String,System.String,System.String)">
+            <summary>
+            Creates a backup for a specific organization at B:\Sicherung\*.bak.
+            </summary>
+            <param name="databaseName">Database name withOUT _MSCRM suffix.</param>
+            <param name="targetBackupFileName">Filename without the .bak extension.</param>
+            <param name="serverIpOrName">Plain ip or hostname of the sql server.</param>
+        </member>
+        <member name="M:Connectiv.XrmBranch.OrganizationManager.DeleteBackup(System.String,System.String,System.Boolean)">
+            <summary>
+            Deletes a backup file on a remote host in B:\Sicherung\.
+            Any exception will be logged and may also be rethrown, depending on the value of <paramref name="suppressError"/>.
+            </summary>
+            <param name="backupFileName">file name of the backup without the .bak.</param>
+            <param name="sqlServerIp">Plain ip address or hostname of the sql server the backup file is stored on.</param>
+            <param name="suppressError">If false no exception will be catched. Default: true</param>
+        </member>
+        <member name="M:Connectiv.XrmBranch.OrganizationManager.AssignActiveProcessesToCurrentUser(Microsoft.Xrm.Sdk.IOrganizationService)">
+            <summary>
+            Gets all active processes which are not owned by the current user. After that
+            assigns all that processes to the current user.
+            <para>
+            This should prevent error while importing customizations after a merge occured.
+            </para>
+            <para>
+            Exceptions occuring while the one assignment will be logged as warnings, but do
+            not interrupt the whole process. Excpetions while quering the workflows are
+            not begin catched.
+            </para>
+            </summary>
+            <param name="service">Connection instance to the organization service.</param>
+        </member>
+        <member name="M:Connectiv.XrmBranch.OrganizationManager.Publish(Microsoft.Xrm.Sdk.IOrganizationService)">
+            <summary>
+            Executes a publish request on the organization.
+            Will retry 5 times before rethrowing the exception.
+            </summary>
+            <param name="connection">Connection instance to the organization service.</param>
+        </member>
+        <member name="M:Connectiv.XrmBranch.OrganizationManager.GetSolutionIdByName(Microsoft.Xrm.Sdk.IOrganizationService,System.String)">
+            <summary>
+            Queries the crm for the solution having uniquename <paramref name="solutionName"/> and 
+            returns the id.
+            </summary>
+            <exception cref="T:System.ArgumentException">If not exactly one solution could be found.</exception>
+            <param name="service">Connection instance to the organization service.</param>
+            <param name="solutionName">Uniquename of the solution to obtain.</param>
+            <returns>Id of the found solution.</returns>
+        </member>
+        <member name="M:Connectiv.XrmBranch.OrganizationManager.UpdateSolutionVersion(Microsoft.Xrm.Sdk.IOrganizationService,System.Guid,System.String)">
+            <summary>
+            Updates the version of the given <paramref name="solutionId"/>.
+            </summary>
+            <param name="service">Connection instance to the organization service.</param>
+            <param name="solutionId">Id of the solution to update.</param>
+            <param name="version">Version number that will be set as solution version.</param>
+        </member>
+        <member name="T:Connectiv.XrmBranch.ProcessManager">
+            <summary>
+            Manager class providing methods to work with the <see cref="T:System.Diagnostics.Process"/> class.
+            </summary>
+        </member>
+        <member name="F:Connectiv.XrmBranch.ProcessManager.WorkingDirectory">
+            <summary>
+            Gets or sets the working directory used for the spawned process.
+            </summary>
+        </member>
+        <member name="M:Connectiv.XrmBranch.ProcessManager.ExecuteProcess(System.String,System.String)">
+            <summary>
+            Executes the given programm with the passed in arguments. Programm will be started from <see cref="F:Connectiv.XrmBranch.ProcessManager.WorkingDirectory"/>.
+            Any output will be redirected and automatically be logged.
+            </summary>
+            <param name="fullFilePath">Filename to be executed. PATH will be searched if not a fullpath is provided.</param>
+            <param name="arguments">Arguments that will be passed in as start parameters to the process.</param>
+            <returns>Exitcode of the process or in case of an exception -1.</returns>
+        </member>
+        <member name="M:Connectiv.XrmBranch.ProcessManager.ExecuteProcess(System.String,System.String,System.Boolean)">
+            <summary>
+            Executes the given programm with the passed in arguments. Programm will be started from <see cref="F:Connectiv.XrmBranch.ProcessManager.WorkingDirectory"/>.
+            </summary>
+            <param name="fullFilePath">Filename to be executed. PATH will be searched if not a fullpath is provided.</param>
+            <param name="arguments">Arguments that will be passed in as start parameters to the process.</param>
+            <param name="redirectOutput">If true, StandardOutput- and StandardErrorStream are redirected, so that all messages are getting logged.</param>
+            <returns>Exitcode of the process or in case of an exception -1.</returns>
+        </member>
+        <member name="M:Connectiv.XrmBranch.ProcessManager.ExecuteProcess(System.String,System.String,System.Text.StringBuilder,System.String,System.Boolean,System.Int32,System.String)">
+            <summary>
+            Executes the given programm with the passed in arguments. Programm will be started from <see cref="F:Connectiv.XrmBranch.ProcessManager.WorkingDirectory"/>.
+            </summary>
+            <param name="fullFilePath">Filename to be executed. PATH will be searched if not a fullpath is provided.</param>
+            <param name="arguments">Arguments that will be passed in as start parameters to the process.</param>
+            <param name="sb">Used to log the output- and errorstream messages to access them later on. Can be set to null. Log4Net logging is always enabled.</param>
+            <param name="pipeInput">If not empty will piped to the StandardInputStream of the process.</param>
+            <param name="redirectOutput">If true, StandardOutput- and StandardErrorStream are redirected, so that all messages are getting logged.</param>
+            <param name="timeout">Maximum amount of time in milliseconds to wait for the process to finish. If set to 0 or less, function waits for unspecific amount of time.</param>
+            <returns>Exitcode of the process or in case of an exception -1.</returns>
+        </member>
+        <member name="M:Connectiv.XrmBranch.ProcessManager.HandleDataReceived(System.String,System.Text.StringBuilder,System.Action{System.String},System.String)">
+            <summary>
+            Logs all non empty <paramref name="message"/>s to the <paramref name="sb"/> and <paramref name="loggingMethod"/>.
+            </summary>
+            <param name="message">The message to log.</param>
+            <param name="sb">Used to get all log messages available for later access. Can be set to null.</param>
+            <param name="loggingMethod">Logging method that should be used. <paramref name="message"/> will be passed in as argument.</param>
+        </member>
+        <member name="T:Connectiv.XrmBranch.ProjectManager">
+            <summary>
+            Central class providing a lot of combined functionality.
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmBranch.ProjectManager.DeleteLocalCheckoutAfterPush">
+            <summary>
+            Gets or sets a value indicating whether to delete all locally created files
+            after pushin them to the remote repo or not. Default: True.
+            </summary>
+        </member>
+        <member name="M:Connectiv.XrmBranch.ProjectManager.CreateNewProject(Connectiv.XrmBranch.GeneralInfo)">
+            <summary>
+            Creates a completly new project based on the <paramref name="info"/>.
+            A new project may include: Jenkins Build, VS Solution and projects, Dev and Test Organization,...
+            <para>
+            At the end further instructions are being logged.
+            </para>
+            <para>
+            Exceptions are getting logged and not rethrown.
+            </para>
+            </summary>
+            <param name="info">Information instance containing all the information needed to create a new project.</param>
+        </member>
+        <member name="M:Connectiv.XrmBranch.ProjectManager.StartNewBranch(Connectiv.XrmBranch.GeneralInfo,Connectiv.XrmBranch.CrmVersion,System.String,System.String,System.String)">
+            <summary>
+            Creates a new branch in the GitLab repo and adds a new connections.config.<paramref name="newBranchName"/> file to
+            that new branch including the connectiondetails to the also nrely created crm organization. The organization
+            will be copied from a source organization.
+            <para>
+            Logs and rethrows exceptions.
+            </para>
+            </summary>
+            <param name="info">Information instance basically used to provide information about the GitLab instance.</param>
+            <param name="sourceCrmVersion">Crm version of the organization to copy from. Used to determine source and destination server.</param>
+            <param name="sourceOrgUniqueName">Name of the organization as used in the Organization element in connections.config file.</param>
+            <param name="sourceBranchName">The branch the new branch will be based on.</param>
+            <param name="newBranchName">Name of the new branch. Will also be automatically appended as suffix for the new organization name.</param>
+        </member>
+        <member name="M:Connectiv.XrmBranch.ProjectManager.SaveCrmSolution(System.Byte[],Connectiv.XrmCommon.ConnectionDetail,System.String)">
+            <summary>
+            Saves the <paramref name="exportedSolution"/> as zip file and extracts the content
+            to a specific folder that is under git version control. 
+            Logs and rethrows any not exception.
+            <para>
+            Exceptions:
+                FileNotFoundException - If the <paramref name="solutionPackagerPath"/> does not exist.
+            </para> 
+            </summary>
+            <param name="exportedSolution">Then byte[] retrieved by an exported crm solution.</param>
+            <param name="connectionDetail">ConnectionDetail instance providing the name of the exported solution and also the crm version.</param>
+            <param name="solutionPackagerPath">Path to the file of the solutionpackager.exe.</param>
+            <returns>DirectoryInfo instance pointing to the folder which contains the extracted file. In case of an exception will throw that exception.</returns>
+        </member>
+        <member name="M:Connectiv.XrmBranch.ProjectManager.SavesAsTempZipFile(System.Byte[],Connectiv.XrmCommon.ConnectionDetail,System.String)">
+            <summary>
+            Saves the <paramref name="exportedSolution"/> as zip file and
+            returns the path of the created file.
+            </summary>
+            <param name="exportedSolution">Then byte[] retrieved by an exported crm solution.</param>
+            <param name="connectionDetail">Used to provide the name of the zip file.</param>
+            <param name="tempDirName">Foldername used to save the zip file. Will be deleted and recreated if already existing.</param>
+            <returns>The path to the created file.</returns>
+        </member>
+        <member name="M:Connectiv.XrmBranch.ProjectManager.ReadVersionedCrmSolution(Connectiv.XrmCommon.ConnectionDetail,System.String)">
+            <summary>
+            Zips an extracted and versioned solution, reads all bytes and finally returns them.
+            The zipped solution will be deleted automatically.
+            Logs and rethrows any not exception.
+            <para>
+            Exceptions:
+                FileNotFoundException - If the <paramref name="solutionPackagerPath"/> does not exist.
+            </para> 
+            </summary>
+            <param name="connectionDetail">Used to get the folder to zip by reference to the solutionname and the crm version.</param>
+            <param name="solutionPackagerPath">Path to the file of the solutionpackager.exe.</param>
+            <returns>The byte[] representing the zipped solution. In case of an exception will throw that exception.</returns>
+        </member>
+        <member name="M:Connectiv.XrmBranch.ProjectManager.CreateNewProjectProcedure(Connectiv.XrmBranch.GeneralInfo)">
+            <summary>
+            Creates a completly new project based on the <paramref name="info"/>.
+            A new project may include: Jenkins Build, VS Solution and projects, Dev and Test Organization,...
+            </summary>
+            <param name="info">Information instance containing all the information needed to create a new project.</param>
+        </member>
+        <member name="M:Connectiv.XrmBranch.ProjectManager.DeleteLocalCheckoutAfterFinalPush(System.IO.DirectoryInfo)">
+            <summary>
+            Deletes the <paramref name="workingDir"/> after waiting a little time including
+            the .git/objects subfolders.
+            Does not throw exceptions, insteads loggs them as warnings.
+            </summary>
+            <param name="workingDir">The path to delete.</param>
+        </member>
+        <member name="M:Connectiv.XrmBranch.ProjectManager.DisplayFurtherInstructionsNewProject(Connectiv.XrmBranch.GeneralInfo)">
+            <summary>
+            Logs further instructions as info level.
+            </summary>
+            <param name="info">Logs depend on what was configured within this info object.</param>
+        </member>
+        <member name="M:Connectiv.XrmBranch.ProjectManager.CreateJenkinsStepsAndFiles(Connectiv.XrmBranch.GeneralInfo)">
+            <summary>
+            Creates all the local config files used for the actual Jenkins build.
+            </summary>
+            <param name="info">Info instancing containing all the ojbects used to create the config files.</param>
+        </member>
+        <member name="M:Connectiv.XrmBranch.ProjectManager.DeleteTempDir(System.String)">
+            <summary>
+            Check if the <paramref name="tempDirName"/> exists
+            and deletes it afterwards. Logging that it is deleted.
+            </summary>
+            <param name="tempDirName">Path that will be deleted.</param>
+        </member>
+        <member name="M:Connectiv.XrmBranch.ProjectManager.CopyTo(System.IO.DirectoryInfo,System.IO.DirectoryInfo)">
+            <summary>
+            Copies the <paramref name="source"/> folder content to the <paramref name="targetDir"/> respecting the folder structure.
+            Existing files will be overriden.
+            </summary>
+            <param name="source">Source directory which will be copied.</param>
+            <param name="targetDir">Target of the copy operation.</param>
+        </member>
+        <member name="T:Connectiv.XrmBranch.RemoteManager">
+            <summary>
+            Manager class providing methods to work with HTTP remote servers.
+            </summary>
+        </member>
+        <member name="M:Connectiv.XrmBranch.RemoteManager.PostHttpRequest(System.String)">
+            <summary>
+            Executes a POST-HTTP request to the provided <paramref name="url"/>.
+            </summary>
+            <param name="url">The url to which the request will be send.</param>
+            <returns>The HTTP response body.</returns>
+        </member>
+        <member name="M:Connectiv.XrmBranch.RemoteManager.PostHttpRequest(System.String,System.Net.Http.HttpContent)">
+            <summary>
+            Executes a POST-HTTP request to the provided <paramref name="url"/>.
+            </summary>
+            <param name="url">The url to which the request will be send.</param>
+            <param name="postContent">The content of the HTTP request.</param>
+            <returns>The HTTP response body.</returns>
+        </member>
+        <member name="M:Connectiv.XrmBranch.RemoteManager.PutHttpRequest(System.String)">
+            <summary>
+            Executes a PUT-HTTP request to the provided <paramref name="url"/>.
+            </summary>
+            <param name="url">The url to which the request will be send.</param>
+            <returns>The HTTP response body.</returns>
+        </member>
+        <member name="M:Connectiv.XrmBranch.RemoteManager.PutHttpRequest(System.String,System.Net.Http.HttpContent)">
+            <summary>
+            Executes a PUT-HTTP request to the provided <paramref name="url"/>.
+            </summary>
+            <param name="url">The url to which the request will be send.</param>
+            <param name="postContent">The content of the HTTP request.</param>
+            <returns>The HTTP response body.</returns>
+        </member>
+        <member name="M:Connectiv.XrmBranch.RemoteManager.GetHttpRequest(System.String)">
+            <summary>
+            Executes a GET-HTTP request to the provided <paramref name="url"/>.
+            </summary>
+            <param name="url">The url to which the request will be send.</param>
+            <returns>The HTTP response body.</returns>
+        </member>
+        <member name="T:Connectiv.XrmBranch.VsProjectTemplate">
+            <summary>
+            Class that provides a wrapper to connect templatename and the projectname.
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmBranch.VsProjectTemplate.TemplateName">
+            <summary>
+            Gets the name of the template to use while creating 
+            a new Visual Studio project.
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmBranch.VsProjectTemplate.ProjectName">
+            <summary>
+            Gets the name of the Visual Studio project
+            </summary>
+        </member>
+        <member name="M:Connectiv.XrmBranch.VsProjectTemplate.#ctor(System.String,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Connectiv.XrmBranch.VsProjectTemplate"/> class.
+            </summary>
+            <param name="templateName">Name of the template that will be used creating the Visual Studio project.</param>
+            <param name="projectName">Name of the Visual Studio project.</param>
+        </member>
+        <member name="T:Connectiv.XrmBranch.VsProjectInfo">
+            <summary>
+            Represents the configuration information
+            for one Visual Studio project.
+            This represensts also the configuration for a testproject if 
+            the <see cref="P:Connectiv.XrmBranch.VsProjectInfo.AddTests"/> is set to true. This is somehow
+            easier to configure but a little pain to work with as it
+            leads to some unneccessary if-statemants. Maybe refactor later
+            when unit- and integrationtests have been written.
+            </summary>
+        </member>
+        <member name="F:Connectiv.XrmBranch.VsProjectInfo.PathTemplate">
+            <summary>
+            Constains a template string which points to the
+            Release path of this project including placeholders
+            for this projects output file.
+            </summary>
+        </member>
+        <member name="F:Connectiv.XrmBranch.VsProjectInfo.NamespaceTemplate">
+            <summary>
+            Contains a template including placeholders for this projects namespace.
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmBranch.VsProjectInfo.ProjectType">
+            <summary>
+            Gets or sets the type of the project. If this will be set to
+            <see cref="F:Connectiv.XrmBranch.VsProjectType.CrmPackage"/> the <see cref="P:Connectiv.XrmBranch.VsProjectInfo.AddTests"/>
+            will automatically set to false as that project is not allowed to
+            have tests.
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmBranch.VsProjectInfo.VsProjectName">
+            <summary>
+            Gets or sets the name of the Visual Studio project. In 
+            general this differs from the normal project name which
+            is taken for the solution name.
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmBranch.VsProjectInfo.VsTestProjectName">
+            <summary>
+            Gets the Name of the testproject if <see cref="P:Connectiv.XrmBranch.VsProjectInfo.AddTests"/> is
+            set to true, else en empty string is returned.
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmBranch.VsProjectInfo.AddTests">
+            <summary>
+            Gets or sets a value indicating whether a test project shall be
+            created. If set to true while the <see cref="P:Connectiv.XrmBranch.VsProjectInfo.ProjectType"/> is
+            set to <see cref="F:Connectiv.XrmBranch.VsProjectType.CrmPackage"/> an ArgumentException
+            is thrown.
+            Default: true
+            </summary>
+        </member>
+        <member name="M:Connectiv.XrmBranch.VsProjectInfo.GetTestNamespace(System.String)">
+            <summary>
+            Gets the default namespace of the testproject. If <see cref="P:Connectiv.XrmBranch.VsProjectInfo.AddTests"/> is set to false, a 
+            not well formatted value will be returned.
+            </summary>
+            <param name="projectName">Name of the whole project. Not the Visual Studio projects name. This could be optimized using <see cref="P:Connectiv.XrmBranch.BasicInfo.ProjectName"/>, but before using that one needs to make sure that these
+            objects always have the value set correctly (maybe provide a custom Add() method.)</param>
+            <returns>Namespace for the testproject.</returns>
+        </member>
+        <member name="M:Connectiv.XrmBranch.VsProjectInfo.GetNamespace(System.String)">
+            <summary>
+            Gets the default namespace of the project.
+            </summary>
+            <param name="projectName">Name of the whole project. Not the Visual Studio projects name.</param>
+            <returns>Namespace for the project.</returns>
+        </member>
+        <member name="M:Connectiv.XrmBranch.VsProjectInfo.GetTestReleasePath(System.String)">
+            <summary>
+            Gets the path to the output file in the release folder of the testproject. If <see cref="P:Connectiv.XrmBranch.VsProjectInfo.AddTests"/> is set to false, a 
+            not well formatted value will be returned.
+            </summary>
+            <param name="projectName">Name of the whole project. Not the Visual Studio projects name. This could be optimized using <see cref="P:Connectiv.XrmBranch.BasicInfo.ProjectName"/>, but before using that one needs to make sure that these
+            objects always have the value set correctly (maybe provide a custom Add() method.)</param>
+            <returns>Path to the output file in the release folder.</returns>
+        </member>
+        <member name="M:Connectiv.XrmBranch.VsProjectInfo.GetReleasePath(System.String)">
+            <summary>
+            Gets the path to the output file in the release folder of the project.
+            </summary>
+            <param name="projectName">Name of the whole project. Not the Visual Studio projects name.</param>
+            <returns>Path to the output file in the release folder.</returns>
+        </member>
+        <member name="T:Connectiv.XrmBranch.VsSolution">
+            <summary>
+            Internal class that is used to interact with the visual solution instance.
+            </summary>
+        </member>
+        <member name="F:Connectiv.XrmBranch.VsSolution.solution">
+            <summary>
+            MS object reference to the solution instance that helps creating
+            a visual studio solution and its project.
+            </summary>
+        </member>
+        <member name="F:Connectiv.XrmBranch.VsSolution.solutionPath">
+            <summary>
+            Directoy folder where the solution will be/is saved.
+            </summary>
+        </member>
+        <member name="F:Connectiv.XrmBranch.VsSolution.name">
+            <summary>
+            Name of the solution.
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmBranch.VsSolution.TemplatesToAdd">
+            <summary>
+            Gets the list of all templates that will be added to the Visual Studio solution.
+            </summary>
+        </member>
+        <member name="M:Connectiv.XrmBranch.VsSolution.#ctor(EnvDTE100.Solution4,System.IO.DirectoryInfo,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Connectiv.XrmBranch.VsSolution"/> class.
+            </summary>
+            <param name="solution">Reference to an MS internal solution object used to create the solution and its projects.</param>
+            <param name="solutionPath">Path where the solution will be safed.</param>
+            <param name="solutionName">Will be set as name of the solution.</param>
+        </member>
+        <member name="M:Connectiv.XrmBranch.VsSolution.AddProjectFromTemplate(System.String,System.String)">
+            <summary>
+            Creates a new Visual Studio project based on a <paramref name="templatePath"/>.
+            </summary>
+            <param name="templatePath">Path to the template.</param>
+            <param name="projectName">Will be used as name of the project.</param>
+        </member>
+        <member name="M:Connectiv.XrmBranch.VsSolution.Save">
+            <summary>
+            Saves the Visual Studio solution.
+            </summary>
+        </member>
+        <member name="M:Connectiv.XrmBranch.VsSolution.Close">
+            <summary>
+            Saves and closes the Visual Studio session.
+            <para>
+            Exceptions:
+                TimeoutException - If too many retries did not successfully close the session.
+            </para>
+            </summary>
+        </member>
+        <member name="M:Connectiv.XrmBranch.VsSolution.AddProjectFromTemplates">
+            <summary>
+            Creates all the projects contained in the <see cref="P:Connectiv.XrmBranch.VsSolution.TemplatesToAdd"/> list.
+            </summary>
+        </member>
+        <member name="T:Connectiv.XrmBranch.VsSolutionManager">
+            <summary>
+            Manager class providing methods to work with a Visual Studio.
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmBranch.VsSolutionManager.IsBoundToCrmTemplateFile">
+            <summary>
+            Gets the path to the file containing the template for the IsBoundToCrm config.
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmBranch.VsSolutionManager.ProjectTypeGuidsTemplateFile">
+            <summary>
+            Gets the path to the file containing the template for the ProjTypGuid.
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmBranch.VsSolutionManager.SolutionCrmPackageReferencesTemplateFile">
+            <summary>
+            Gets the path to the file containing the template for creating project references in the crmpackages config within the solution file.
+            </summary>
+        </member>
+        <member name="P:Connectiv.XrmBranch.VsSolutionManager.SingleSolutionCrmPackageReferencesTemplateFile">
+            <summary>
+            Gets the path to the file containing the template for setting a single project reference in the crmpackages config within the solution file.
+            </summary>
+        </member>
+        <member name="F:Connectiv.XrmBranch.VsSolutionManager.typeToTemplateName">
+            <summary>
+            Resolves a visual studio project type to the correct VisualStudio project template file.
+            </summary>
+        </member>
+        <member name="F:Connectiv.XrmBranch.VsSolutionManager.typeToTestTemplateName">
+            <summary>
+            Resolves a visual studio project type to the correct VisualStudio test project template file.
+            </summary>
+        </member>
+        <member name="M:Connectiv.XrmBranch.VsSolutionManager.CreateCSharpSolutionAndProjects(Connectiv.XrmBranch.GeneralInfo)">
+            <summary>
+            Creates a new visual studio solution and adds all configured projects to it.
+            </summary>
+            <param name="info">Information instance containing everything needed to create a new solution and new projects.</param>
+            <returns>Names of all created projects.</returns>
+        </member>
+        <member name="M:Connectiv.XrmBranch.VsSolutionManager.AdjustCrmRegisterFile(Connectiv.XrmBranch.GeneralInfo)">
+            <summary>
+            Adjusts the config entries in the crmregisterfile to include all plugin and workflow projects.
+            Will not do anything in case there is no crmpackage and (plugin or workflow).
+            </summary>
+            <param name="info">Information instance providing all information needed to adjust the file.</param>
+        </member>
+        <member name="M:Connectiv.XrmBranch.VsSolutionManager.CloseVsSession(Connectiv.XrmBranch.VsSolution,EnvDTE80.DTE2,System.Boolean)">
+            <summary>
+            Closes the VisualStudio session and frees the brackgroud process.
+            If this somehow goes wrong, the background process remains and takes
+            away resources till the process is killed manually. Also this may
+            break the functionality of this tool.
+            </summary>
+            <param name="solution">The solution instace to close.</param>
+            <param name="dte">The background object used to communicate with the VS. Needs also to be closed.</param>
+            <param name="alreadyClosed">Indicates if the solution has already been closed.</param>
+        </member>
+        <member name="M:Connectiv.XrmBranch.VsSolutionManager.AdjustReferencesInTestProjects(Connectiv.XrmBranch.GeneralInfo)">
+            <summary>
+            Adds a refernece to the Testproject pointing to it's partner project manupulating directly the csproj files.
+            First it needs to read the ProjectGuid-Element from the partner's project file. Then it adds a XML block to
+            the test project's csproj file.
+            This should not throw any exception as this is just a nice to have and easyly to handle in case of an error
+            </summary>
+            <param name="info">Information instance providing all information needed to adjust the file.</param>
+        </member>
+        <member name="M:Connectiv.XrmBranch.VsSolutionManager.AdjustReferencesInCrmPackage(Connectiv.XrmBranch.GeneralInfo)">
+            <summary>
+            Adds references in the crmpackage project so it includes all workflow and plugin projects.
+            </summary>
+            <param name="info">Information instance providing all information needed to adjust the file.</param>
+        </member>
+        <member name="M:Connectiv.XrmBranch.VsSolutionManager.AddReferenceToCrmPackage(Connectiv.XrmBranch.GeneralInfo,System.String,Connectiv.XrmBranch.VsProjectInfo)">
+            <summary>
+            Adds a single project reference to the crmpackage
+            </summary>
+            <param name="info"></param>
+            <param name="referencingProjectName"></param>
+            <param name="referencedProject"></param>
+        </member>
+        <member name="M:Connectiv.XrmBranch.VsSolutionManager.AddReferenceToProject(Connectiv.XrmBranch.GeneralInfo,System.String,System.String)">
+            <summary>
+            Adds a reference within the csproj file of the <paramref name="referencingProjectName"/> to the
+            <paramref name="referencedProjectName"/>. Tries to get the needed ProjectGuid from the referenced
+            project by extracting it from the csproj file.
+            </summary>
+            <param name="info">Information instance providing the current working directory.</param>
+            <param name="referencingProjectName">Name of the csproj file without the extension that is getting the reference added.</param>
+            <param name="referencedProjectName">Name of the project that will be added as reference.</param>
+        </member>
+        <member name="M:Connectiv.XrmBranch.VsSolutionManager.AddReferenceToProject(System.IO.DirectoryInfo,System.String,System.String,System.String)">
+            <summary>
+            Adds a reference within the csproj file of the <paramref name="referencingProjectName"/> to the
+            <paramref name="referencedProjectName"/>.
+            </summary>
+            <param name="info">Information instance providing the current working directory.</param>
+            <param name="referencingProjectName">Name of the csproj file without the extension that is getting the reference added.</param>
+            <param name="referencedProjectName">Name of the project that will be added as reference.</param>
+            <param name="referencedProjectGuid">Guid of the project that will be added as reference.</param>
+        </member>
+        <member name="M:Connectiv.XrmBranch.VsSolutionManager.GetProjectGuidFromCsProj(System.IO.DirectoryInfo,System.String)">
+            <summary>
+            Extracts the value of the ProjectGuid element of a VisualStudio csproj file.
+            <para>
+            Exceptions
+                ArgumentException - If not exactly one csproj file was found.
+            </para>
+            </summary>
+            <param name="workingDir">Root folder where the search for the csproj starts.</param>
+            <param name="referendedProjectName">Name of the csproj file without the fileextension.</param>
+            <returns>The value of the ProjectGuid element.</returns>
+        </member>
+        <member name="M:Connectiv.XrmBranch.VsSolutionManager.AdjustNamespaces(Connectiv.XrmBranch.GeneralInfo)">
+            <summary>
+            Adjusts the RootNamespace and AssemlbyName in all created VS projects and the namespace of created cs-files
+            This is necessary, because default templates are not capable of doing it completly correct.
+            This should not throw any exception as this is just a nice to have and easyly to handle in case of an error.
+            </summary>
+            <param name="info">Information instance providing the projects to adjust.</param>
+        </member>
+        <member name="M:Connectiv.XrmBranch.VsSolutionManager.AdjustSingleFileNamespace(Connectiv.XrmBranch.GeneralInfo,System.String,System.String)">
+            <summary>
+            Modifies the cs files and adjusts the namespace
+            to have the correct value for this specific project.
+            <para>
+            Logs every exception as errors without rethrowing them. This should manually to be rewored.
+            </para>
+            </summary>
+            <param name="info">Information instance providing the information needed to adjust the namespaces.</param>
+            <param name="vsProjectName">The name of the VisualStudio project.</param>
+            <param name="projectNamespace">The namespace that will be the replacing value.</param>
+        </member>
+        <member name="M:Connectiv.XrmBranch.VsSolutionManager.AdjustSingleRootNamespace(Connectiv.XrmBranch.GeneralInfo,System.String,System.String)">
+            <summary>
+            Modifies the csproj file and adjusts the RootNamespace and AssemblyName
+            element to have the correct value for this specific project.
+            <para>
+            Logs every exception as errors without rethrowing them. This should manually to be rewored.
+            </para>
+            </summary>
+            <param name="info">Information instance providing the information needed to adjust the namespaces.</param>
+            <param name="vsProjectName">The name of the VisualStudio project.</param>
+            <param name="projectNamespace">The namespace that will be the replacing value.</param>
+        </member>
+        <member name="M:Connectiv.XrmBranch.VsSolutionManager.AddIsBoundtoCrmToSln(Connectiv.XrmBranch.GeneralInfo)">
+            <summary>
+            Adds the IsBoundToCrm config entry to the sln file, so that the connection dialog shows up if any 
+            CrmPackage project was created.
+            <para>
+            Logs every exception as errors without rethrowing them. This should manually to be rewored.
+            </para>
+            </summary>
+            <param name="info">Information instance providing everything needed to add the config.</param>
+        </member>
+        <member name="M:Connectiv.XrmBranch.VsSolutionManager.AddReferenceToSolution(Connectiv.XrmBranch.GeneralInfo,Connectiv.XrmBranch.VsProjectInfo)">
+            <summary>
+            Adds a config entry for the sln file in which the crmpackage gets the references
+            to all the plugin and workflow projects it shall upload. Will no do anything
+            in case that no project and workflow project has been created.
+            <para>
+            Exceptions:
+                ArgumentException - If not exactly one single sln file is found.
+            </para>
+            </summary>
+            <param name="info">Information instance providing everythign needed to add the references.</param>
+            <param name="crmPackage">The projectinformation of the crmPackage.</param>
+        </member>
+        <member name="M:Connectiv.XrmBranch.VsSolutionManager.FillFullReferenceTemplate(Connectiv.XrmBranch.GeneralInfo,Connectiv.XrmBranch.VsProjectInfo,System.Collections.Generic.List{System.String})">
+            <summary>
+            Fills the <see cref="P:Connectiv.XrmBranch.VsSolutionManager.SolutionCrmPackageReferencesTemplateFile"/> template and
+            returns the complete string.
+            </summary>
+            <param name="info">Information instance providing the current working directory.</param>
+            <param name="crmPackage">The projectinformation of the crmPackage.</param>
+            <param name="projectIds">The ids of created projects.</param>
+            <returns>The filled template.</returns>
+        </member>
+        <member name="M:Connectiv.XrmBranch.VsSolutionManager.FillSingleReferencesTemplate(Connectiv.XrmBranch.GeneralInfo)">
+            <summary>
+            For every project the <see cref="P:Connectiv.XrmBranch.VsSolutionManager.SingleSolutionCrmPackageReferencesTemplateFile"/> will be filled.
+            </summary>
+            <param name="info">Information instance containing all the projects to fill the templates with.</param>
+            <returns>List of all templates fille for every project.</returns>
+        </member>
+    </members>
+</doc>
