@@ -146,9 +146,9 @@ namespace Plugins.CustomAPIs
         private string ReadDataFromResponse(HttpResponseMessage response)
         { 
             return response.Content.ReadAsStringAsync()
-            .ConfigureAwait(false)
-            .GetAwaiter()
-            .GetResult();
+                .ConfigureAwait(false)
+                .GetAwaiter()
+                .GetResult();
         }
 
         private List<Issue> GetIssues(string json)
